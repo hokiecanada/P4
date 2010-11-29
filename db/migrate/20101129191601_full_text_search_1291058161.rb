@@ -1,4 +1,4 @@
-class FullTextSearch1291057609 < ActiveRecord::Migration
+class FullTextSearch1291058161 < ActiveRecord::Migration
   def self.up
     execute(<<-'eosql'.strip)
       DROP index IF EXISTS entries_fts_idx
@@ -16,14 +16,6 @@ class FullTextSearch1291057609 < ActiveRecord::Migration
       ON entries
       USING gin((to_tsvector('english', coalesce("entries"."authors", ''))))
     eosql
-    execute(<<-'eosql'.strip)
-      DROP index IF EXISTS entries_year_fts_idx
-    eosql
-    execute(<<-'eosql'.strip)
-      CREATE index entries_year_fts_idx
-      ON entries
-      USING gin((to_tsvector('english', coalesce("entries"."year", ''))))
-    eosql
   end
 
   def self.down
@@ -32,9 +24,6 @@ class FullTextSearch1291057609 < ActiveRecord::Migration
     eosql
     execute(<<-'eosql'.strip)
       DROP index IF EXISTS entries_author_fts_idx
-    eosql
-    execute(<<-'eosql'.strip)
-      DROP index IF EXISTS entries_year_fts_idx
     eosql
   end
 end

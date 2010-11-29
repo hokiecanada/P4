@@ -29,7 +29,6 @@ class Entry < ActiveRecord::Base
   end
   
   index('author') { authors }
-  index('year') { year }
 
   belongs_to :user
   
