@@ -9,7 +9,7 @@ P4::Application.routes.draw do
 
 
 
-  devise_for :users, :path => 'user_account', :controllers => { :registrations => "users/registrations" }
+  devise_for :users , :path => 'user_account'#, :controllers => { :registrations => "users/registrations" }
 
   resources :users do
 	resources :entries, :controller => "accounts"
