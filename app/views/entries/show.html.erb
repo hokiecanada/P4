@@ -7,7 +7,7 @@
 
 <p>
   <b>Paper title: </b><%= @entry.title %><br>
-  <b>Authors: </b><%= @entry.author_list %><br>
+  <b>Authors: </b><%= @entry.authors %><br>
   <b>Citation: </b><%= @entry.citation %><br> 
   <b>URL: </b><%= link_to @entry.paper_url %><br>
 </p>
@@ -20,55 +20,19 @@
 
 <p>
   <b>Environment: </b>
-	<%= @entry.env_dim %>
-	
-	<% if @entry.env_scale == 1 %>small scale,  
-	<% elsif @entry.env_scale == 2 %>medium scale, 
-	<% elsif @entry.env_scale == 2 %>large scale, 
-	<% else %>unreported scale, 
-	<% end %>
-	
-	<% if @entry.env_density == 1 %>low density,  
-	<% elsif @entry.env_density == 2 %>medium density, 
-	<% elsif @entry.env_density == 2 %>high density, 
-	<% else %>unreported density, 
-	<% end %>
-	
-	<% if @entry.env_realism == 1 %>low realism 
-	<% elsif @entry.env_realism == 2 %>medium realism
-	<% elsif @entry.env_realism == 2 %>high realism
-	<% else %>unreported realism
-	<% end %><br>
+  <%= @entry.env_dim %>, <%= @entry.env_scale %>, <%= @entry.env_density %>, <%= @entry.env_realism %><br>
 </p>
 
 <p>
   <b>Participants: </b>
-	<% if @entry.part_num == 1 %>1-5, 
-	<% elsif @entry.part_num == 2 %>6-10, 
-	<% elsif @entry.part_num == 3 %>11-20, 
-	<% elsif @entry.part_num == 4 %>21-50, 
-	<% elsif @entry.part_num == 5 %>50+, 
-	<% else %>No participants
-	<% end %>
-	
-	<% if @entry.part_num != 6 %>
-		<% if @entry.part_gender == 1 %>female only,  
-		<% elsif @entry.part_gender == 2 %>mostly female, 
-		<% elsif @entry.part_gender == 3 %>balanced male/female, 
-		<% elsif @entry.part_gender == 4 %>mostly male, 
-		<% elsif @entry.part_gender == 5 %>male only, 
-		<% else %>unreported gender, 
-		<% end %>
-	
-		ages <%= @entry.part_age %><br>
-		<b>Technical background: </b><%= @entry.part_background %><br>
-		<b>Other information: </b><%= @entry.part_other %><br>
-	<% end %>
+  <%= @entry.part_num %>, <%= @entry.part_gender %>, <%= @entry.part_age %><br>
+  <b>Technical background: </b><%= @entry.part_background %><br>
+  <b>Other information: </b><%= @entry.part_other %><br>
 </p>
 
 <p>	
   <b>Experiment details:</b><br>
-  <% if @entry.exp_type == 1 %>
+  <% if @entry.exp_type == "Controlled experiment" %>
 	<b>Experiment type: </b>A controlled experiment varying individual components of immersion independently<br>
     <b>Categories of VR displays used in the experiment: </b><%= @entry.system_list %><br>
 	<b>Technical specifications of the systems used: </b><%= @entry.systems_desc %><br>
@@ -86,13 +50,7 @@
 
 <p>  
   <b>Findings: </b><%= @entry.findings %><br>
-  <b>Specificity of the findings: </b>
-	<% if @entry.specificity == 1 %>Highly general 
-	<% elsif @entry.specificity == 2 %>Somewhat general
-	<% elsif @entry.specificity == 3 %>Neither general nor specific
-	<% elsif @entry.specificity == 4 %>Somewhate specific
-	<% else %>Highly specific
-	<% end %><br>
+  <b>Specificity of the findings: </b><%= @entry.specificity %><br>
   <b>Issues limiting the generality or validity of these results: </b><%= @entry.issues %><br>
   <b>Additional information regarding the experiment: </b><br> 
 </p>
