@@ -32,10 +32,8 @@ class EntriesController < ApplicationController
 	@sort_by = params[:sort_by]
 	
 	if params[:search]
-		search = Entry.search(:include => [:comments]) do
-			keywords(params[:search])
-		end
-		@entries = search.results
+		@entries = Entry.search(params[:search])
+		#@entries = search.results
 	elsif @filter
 		@entries = Entry.tagged_with(params[:filter], :order => @sort_by)
 	else

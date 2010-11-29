@@ -1,10 +1,14 @@
 class Entry < ActiveRecord::Base
-
-  searchable do
-	text :title, :default_boost => 2
-	text :summary
-	text :author_list
+  index do
+	title
+	summary
   end
+	
+  #searchable do
+	#text :title, :default_boost => 2
+	#text :summary
+	#text :author_list
+  #end
 
   belongs_to :user
   
