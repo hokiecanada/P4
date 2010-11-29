@@ -1,0 +1,59 @@
+<h3>Components:</h3>
+<ul><% Component.find(:all).each do |component| %>
+	<li><%= component.tag %>
+	<%= link_to 'Delete', component, 
+				:confirm => 'Are you sure?',
+				:method => :delete %></li>
+	<% end %>
+</ul>
+  
+<%= form_for(Component.new) do |f| %>
+	<% f.error_messages %>
+
+	<div class="field">
+		<%= f.text_field :tag %>
+	</div>
+	<div class="actions">
+		<%= f.submit "Add Component" %>
+	</div>
+<% end %> 
+
+<h3>Systems:</h3>
+<ul><% System.find(:all).each do |system| %>
+	<li><%= system.tag %>
+	<%= link_to 'Delete', system, 
+				:confirm => 'Are you sure?',
+				:method => :delete %></li>
+	<% end %>
+</ul>
+  
+<%= form_for(System.new) do |f| %>
+	<% f.error_messages %>
+
+	<div class="field">
+		<%= f.text_field :tag %>
+	</div>
+	<div class="actions">
+		<%= f.submit "Add System" %>
+	</div>
+<% end %> 
+
+<h3>Tasks:</h3>
+<ul><% Task.find(:all).each do |task| %>
+	<li><%= task.tag %>
+	<%= link_to 'Delete', task, 
+				:confirm => 'Are you sure?',
+				:method => :delete %></li>
+	<% end %>
+</ul>
+  
+<%= form_for(Task.new) do |f| %>
+	<% f.error_messages %>
+
+	<div class="field">
+		<%= f.text_field :tag %>
+	</div>
+	<div class="actions">
+		<%= f.submit "Add Task" %>
+	</div>
+<% end %> 

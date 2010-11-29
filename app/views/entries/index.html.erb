@@ -1,0 +1,45 @@
+<%= auto_discovery_link_tag(:rss, entries_url(:filter => @filter, :sort_by => @sort_by, :search => @search, :format => 'rss')) %>
+
+<p>
+	<b>Sort by: </b>
+	<%= link_to 'Title', entries_path(:sort_by => "title ASC", :filter => @filter, :search => @search) %> | 
+	<%= link_to 'Date', entries_path(:sort_by => "year DESC", :filter => @filter, :search => @search) %> | 
+	<%= link_to 'Times Viewed', entries_path(:sort_by => "viewed DESC", :filter => @filter, :search => @search) %>
+</p>
+
+<% @entries.each do |entry| %>
+<p>
+	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
+	<% entry.tag_list_on(:authors).each_with_index do |author,i| %>
+		<%= link_to author, entries_path(:filter => author) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
+	<% end %><br>
+	
+	<% if entry.exp_type == 1 %>Controlled Experiment
+	<% else %>Practical comparison
+	<% end %><br>
+	
+	Tags: 
+	<% entry.tag_list_on(:tasks).each do |tag| %>
+		<%= link_to tag, entries_path(:filter => tag) %>, 
+	<% end %>
+	<% entry.tag_list_on(:systems).each do |tag| %>
+		<%= link_to tag, entries_path(:filter => tag) %>, 
+	<% end %>
+	<% entry.tag_list_on(:comps).each_with_index do |tag,i| %>
+		<%= link_to tag, entries_path(:filter => tag) %><% if i < entry.tag_list_on(:comps).size - 1 %>, <% end %>
+	<% end %>
+	<br>
+	Times Viewed: <%= entry.viewed %><br>
+	
+	<% if User.find(entry.user_id) == current_user %>
+		<%= link_to 'Edit', edit_user_entry_path(current_user, entry) %>
+		<%= link_to 'Destroy', user_entry_path(current_user, entry), :confirm => 'Are you sure?', :method => :delete %><br>
+	<% end %>
+	
+</p>
+<%= will_paginate @entries %>
+<% end %>
+
+<br />
+
+<%= link_to 'New Entry', new_entry_path %>

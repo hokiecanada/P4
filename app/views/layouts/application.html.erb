@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project4</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<div id="user_nav">
+  <% if user_signed_in? %>
+    Signed in as <%= current_user.email %>. Not you?
+    <%= link_to "Sign out", destroy_user_session_path %>
+  <% elsif admin_signed_in? %>
+	Signed in as <%= current_admin.email %>. Not you?
+    <%= link_to "Sign out", destroy_admin_session_path %>
+  <% else %>
+    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
+	 | <%= link_to "Admin sign-in", new_admin_session_path %>
+  <% end %>
+</div>
+<div id="container">
+	<div id="header">
+		<h1>
+			VR Knowledgebase
+		</h1>
+	</div>
+	<div id="navigation">
+		<ul>
+
+		</ul>
+	</div>
+	<div id="content-container">
+		<div id="aside">
+			<p>
+				<% if user_signed_in? %>
+					<%= button_to 'Submit Entry', new_user_entry_path(current_user) %>
+				<% else %>
+					<%= button_to 'Submit Entry', new_entry_path(current_user) %>
+				<% end %>
+			</p>
+			<p>
+				<h3>Browse by category:</h3>
+				<p>
+					Components of Immersion:
+					<ul><% Component.find(:all).each do |c| %>
+						<li><%= link_to c.tag, entries_path(:filter => c.tag) %> (<%= Entry.tagged_with(c.tag).size %>)</li>
+					<% end %></ul>
+				</p>
+				<p>
+					Tasks:
+					<ul><% Task.find(:all).each do |t| %>
+						<li><%= link_to t.tag, entries_path(:filter => t.tag) %> (<%= Entry.tagged_with(t.tag).size %>)</li>
+					<% end %></ul>
+				</p>
+				<p>
+					Systems:
+					<ul><% System.find(:all).each do |s| %>
+						<li><%= link_to s.tag, entries_path(:filter => s.tag) %> (<%= Entry.tagged_with(s.tag).size %>)</li>
+					<% end %></ul>
+				</p>
+			</p>
+		</div>
+		<div id="content">
+			<p>
+				<%= form_tag entries_path, :method => 'get' do %>
+					<%= text_field_tag :search, @search, :size => 75 %>
+					<%= submit_tag "Search", :name => nil %>
+				<% end %>
+			</p>
+			<p>
+				<%= yield %>
+			</p>
+		</div>
+
+	</div>
+		<div id="footer">
+			Copyright
+		</div>
+</div>
+
+</body>
+</html>

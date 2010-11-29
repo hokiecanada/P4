@@ -1,0 +1,52 @@
+<p>
+<%= link_to "Edit Entry Form", admin_form_edit_path %>
+</p>
+
+<p>
+<h2>Manage entries:</h2>
+<table border="1" cellpadding="5">
+<tr>
+	<th>Summary</th>
+	<th>Status</th>
+	<th>Updated</th>
+	<th></th>
+	<th></th>
+	<th></th>
+</tr>
+<% @entries.each do |entry| %>
+<tr>
+	<td><%= entry.summary %></td>
+	<td><%= entry.status %></td>
+	<td><%= entry.updated_at %></td>
+	<td><%= link_to "View", entry %></td>
+	<td><%= link_to "Edit", edit_entry_path(entry) %></td>
+	<td><%= link_to "Delete", entry_path(entry), :confirm => 'Are you sure?', :method => :delete %></td>
+</tr>
+<% end %>
+</table>
+
+</p>
+
+<p>
+<h2>Manage users:</h2>
+<table border="1" cellpadding="5">
+<tr>
+	<th>Email</th>
+	<th>Last access</th>
+	<th># of Entries</th>
+	<th></th>
+	<th></th>
+</tr>
+<% @users.each do |user| %>
+<tr>
+	<td><%= user.email %></td>
+	<td><%= user.last_sign_in_at %></td>
+	<td><%= user.entries.size() %></td>
+	<td><%= link_to "User Details", edit_user_registration_path(:user => user) %></td>
+	<td><%= link_to "View Entries", user_entries_path(user) %></td>
+	<td><%= link_to "Delete User", user_registration_path(:user => user),
+			:confirm => "Are you sure?", :method => :delete %></td>
+</tr>
+<% end %>
+</table>
+</p>

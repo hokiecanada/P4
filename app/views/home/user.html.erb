@@ -1,0 +1,11 @@
+
+<p>
+<h2>My contributions:</h2>
+<% @entries.each do |entry| %>
+	<%= link_to entry.title, entry_path(entry) %><br>
+<% end %>
+</p>
+
+<p>
+<h2>My favorites:</h2>
+</p>
