@@ -2,7 +2,6 @@ class Entry < ActiveRecord::Base
   index do
 	title
 	authors
-	year
     task
     task_desc
     interface_desc
