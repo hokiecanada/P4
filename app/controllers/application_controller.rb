@@ -6,5 +6,5 @@ class ApplicationController < ActionController::Base
   def get_search
 	@search = params[:search]
   end
-  
+	
 end

@@ -2,12 +2,19 @@
 <p id="notice"><%= notice %></p>
 
 <% if User.find(@entry.user_id) == current_user %>
-	<%= button_to 'Edit Entry', edit_user_entry_path(@entry) %>
+	<%= button_to 'Edit Entry', edit_entry_path(@entry) %>
+<% elsif user_signed_in? %>
+	<% form_for [@entry, current_user.favorites.build] do |f| %>
+		<%= f.hidden_field :user_id, :value => current_user.id %>
+		<%= f.submit 'Add to Favorites' %>
+	<% end %>
 <% end %>
 
+
 <p>
+  Tags: <%= @entry.tags_string %><br>
   <b>Paper title: </b><%= @entry.title %><br>
-  <b>Authors: </b><%= @entry.authors %><br>
+  <b>Authors: </b><%= author_links(@entry) %><br>
   <b>Citation: </b><%= @entry.citation %><br> 
   <b>URL: </b><%= link_to @entry.paper_url %><br>
 </p>
@@ -62,8 +69,9 @@
 </p>
 
 <% if User.find(@entry.user_id) == current_user %>
-	<%= link_to 'Edit Entry', edit_user_entry_path(@entry) %> | 
-	<%= link_to 'Back', user_path %>
+	<%= link_to 'Edit Entry', edit_entry_path(@entry) %> | 
+	<%= link_to 'Delete Entry', entry_path(@entry), :confirm => 'Are you sure?', :method => :delete %>
+	<%= link_to 'Back', user_root_path %>
 <% else %>
 	<%= link_to 'Back', entries_path %>
 <% end %>

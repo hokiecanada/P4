@@ -1,6 +1,7 @@
 P4::Application.routes.draw do
   resources :entries do
 	resources :comments
+	resources :favorites
   end
   
   resources :tasks
@@ -9,31 +10,46 @@ P4::Application.routes.draw do
 
 
 
-  devise_for :users , :path => 'user_account'#, :controllers => { :registrations => "users/registrations" }
+  devise_for :users do
+	resources :favorites
+  end
+  #, :path => ''#, :controllers => { :registrations => "users/registrations" }
+  #devise_for :users, :as => "", :path_names => { :sign_in => "login", :sign_out => "logout", :sign_up => "register" } 
 
-  resources :users do
-	resources :entries, :controller => "accounts"
-  end
+	#match "login" => "devise/sessions#new", :as => :new_user_session 
+	#match "logout" => "devise/sessions#destroy", :as => :destroy_user_session
+	#match "register" => "devise/registrations#new", :as => :new_user_registration
+
+  #resources :users do
+	#resources :entries, :controller => "accounts"
+	#resources :favorites
+  #end
   
-  devise_for :admins, :path => 'admin_account'
+
+  #resources :accounts do
+	#resources :entries
+	#resources :favorites
+  #end
   
-  resources :admins do
-	resources :entries
-  end
+  devise_for :admins
   
-  match "/admin" => "home#admin"
-  match "user" => "accounts#index"
+  
+  #match "/admin" => "home#admin"
+  #match "/user/" => "accounts#index"
   match "/admin/form/edit" => "form#edit"
-  match "/users/:user_id/entries/new" => "accounts#new"
-  match "/users/:user_id/entries/:id/edit" => "accounts#edit"
+  #match "/users/:user_id/entries/new" => "accounts#new"
+  #match "/users/:user_id/entries/:id/edit" => "accounts#edit"
   match "/entries/new" => "entries#new"
+  match "/entries/:id/edit" => "entries#edit"
   match "search" => "entries#search"
   match "intro" => "entries#intro"
+  #match "/favorites/new" => "favorites#new"
+  #match "/entries/:id" => "entries#show"
 
   match "/entries.rss" => "entries#rss"
   
   namespace :user do
-	root :to => "accounts#index", :controller => "accounts"
+	root :to => "home#user",  :controller => "home"
   end
   
   namespace :admin do

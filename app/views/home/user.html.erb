@@ -2,10 +2,19 @@
 <p>
 <h2>My contributions:</h2>
 <% @entries.each do |entry| %>
-	<%= link_to entry.title, entry_path(entry) %><br>
+	<%= link_to entry.title, entry_path(entry) %>
+	<small><%= link_to 'Edit', edit_entry_path(entry) %> | 
+	<%= link_to 'Delete', entry_path(:id => entry), :confirm => 'Are you sure?', :method => :delete %></small><br>
+</tr>
 <% end %>
 </p>
 
 <p>
 <h2>My favorites:</h2>
+<% current_user.favorites.each do |fav| %>
+	<% entry = Entry.find(fav.entry_id) %>
+	<%= link_to entry.title, entry_path(entry) %>
+	<%= link_to 'Delete', favorite_path(fav), :confirm => 'Are you sure?', :method => :delete %></small><br>
+</tr>
+<% end %>
 </p>

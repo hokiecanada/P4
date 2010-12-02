@@ -1,5 +1,28 @@
 class EntriesController < ApplicationController
 
+  before_filter :authenticate, :only => [:new, :create]
+  before_filter :authenticate_owner, :only => [:edit, :update, :destroy]
+  
+  def authenticate
+	authenticate_user!
+  end
+  
+  def authenticate_owner
+	if user_signed_in?
+		@user = User.find(current_user)
+		@entry = current_user.entries.find(params[:id])
+		
+		if @entry.user_id != current_user.id
+			redirect_to entry_path(@entry), :notice => 'You do not have permission to do that.'
+		end
+	elsif admin_signed_in?
+		@user = User.find(params[:user_id])
+		@entry = @user.entries.find(params[:id])
+	else
+		redirect_to entry_path(@entry), :notice => 'You do not have permission to do that.'
+	end
+  end
+  
   def tag_cloud
 	@tags = Entry.author_counts
   end
@@ -66,11 +89,13 @@ class EntriesController < ApplicationController
   # GET /entries/new
   # GET /entries/new.xml
   def new
-    authenticate_user! 
-	user = User.find(params[:user_id])
-    @entry = user.entries.build
+    #authenticate_user! 
+	
+	#user = User.find(params[:user_id])
+    @entry = current_user.entries.build
 	@systems = Array.new[System.find(:all).size]
 	@components = Array.new[Component.find(:all).size]
+	#redirect_to new_user_entry_path(current_user)
 	
     respond_to do |format|
       format.html # new.html.erb
@@ -80,8 +105,7 @@ class EntriesController < ApplicationController
 
   # GET /entries/1/edit
   def edit
-    user = User.find(params[:user_id])
-    @entry = @user.entries.find(params[:id])
+    #@entry = current_user.entries.find(params[:id])
 	@systems = Array.new[System.find(:all).size]
 	@components = Array.new[Component.find(:all).size]
   end
@@ -89,8 +113,8 @@ class EntriesController < ApplicationController
   # POST /entries
   # POST /entries.xml
   def create
-    user = User.find(params[:user_id])
-    @entry = user.entries.create(params[:entry])
+    #user = User.find(params[:user_id])
+    @entry = current_user.entries.create(params[:entry])
 	@entry.viewed = 0
 	@entry.status = "Pending"
 	
@@ -104,9 +128,12 @@ class EntriesController < ApplicationController
 		@entry.comp_list.add(c)
 	end
 	
+	@entry.tags_string = tasks_string(@entry) + " " + comps_string(@entry) + " " + systems_string(@entry)
+	@entry.authors_string = author_string(@entry)
+	
     respond_to do |format|
       if @entry.save
-        format.html { redirect_to entry_path(@entry), :notice => 'Entry was successfully created.' }
+        format.html { redirect_to user_root_path, :notice => 'Entry was successfully created.' }
         format.xml  { render :xml => @entry, :status => :created, :location => @entry }
       else
         format.html { render :action => "new" }
@@ -118,8 +145,6 @@ class EntriesController < ApplicationController
   # PUT /entries/1
   # PUT /entries/1.xml
   def update
-    user = User.find(params[:user_id])
-    @entry = user.entries.find(params[:id])
 	
 	@entry.status = "Pending"
 	@entry.system_list = ""
@@ -133,6 +158,9 @@ class EntriesController < ApplicationController
 	@components.each do |c|
 		@entry.comp_list.add(c)
 	end
+	
+	@entry.tags_string = tasks_string(@entry) + " " + comps_string(@entry) + " " + systems_string(@entry)
+	@entry.authors_string = author_string(@entry)
 	
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
@@ -148,13 +176,51 @@ class EntriesController < ApplicationController
   # DELETE /entries/1
   # DELETE /entries/1.xml
   def destroy
-    user = User.find(params[:user_id])
-    @entry = user.entries.find(params[:id])
+  
     @entry.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(entries_url) }
-      format.xml  { head :ok }
-    end
+	respond_to do |format|
+		if admin_signed_in?
+			format.html { redirect_to admin_root_path, :notice => 'Entry was successfully deleted.' }
+		else
+			format.html { redirect_to user_root_path, :notice => 'Entry was successfully deleted.' }
+		end
+	end
+  end
+  
+  
+  def tasks_string(entry)
+	return "" unless entry.task_list.any?
+	tasks = entry.task_list.collect do |tag|
+		tag
+	end
+	tasks_string = tasks.join(' ')
+  end
+
+  
+  def comps_string(entry)
+	return "" unless entry.comp_list.any?
+	comps = entry.comp_list.collect do |tag|
+		tag
+	end
+	comps_string = comps.join(' ')
+  end
+  
+
+  def systems_string(entry)
+	return "" unless entry.system_list.any?
+	systems = entry.system_list.collect do |tag|
+		tag
+	end
+	systems_string = systems.join(' ')
+  end
+  
+
+  def author_string(entry)
+	return "" unless entry.author_list.any?
+	authors = entry.author_list.collect do |tag|
+		tag
+	end
+	authors_string = authors.join(' ')
   end
 end

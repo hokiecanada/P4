@@ -10,7 +10,7 @@
 <% @entries.each do |entry| %>
 <p>
 	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
-	<%= entry.authors %><br>
+	<%= entry.author_list %><br>
 	
 	<%= entry.exp_type %><br>
 	
@@ -27,15 +27,6 @@
 	<br>
 	Times Viewed: <%= entry.viewed %><br>
 	
-	<% if User.find(entry.user_id) == current_user %>
-		<%= link_to 'Edit', edit_user_entry_path(current_user, entry) %>
-		<%= link_to 'Destroy', user_entry_path(current_user, entry), :confirm => 'Are you sure?', :method => :delete %><br>
-	<% end %>
-	
 </p>
 <%= will_paginate @entries %>
 <% end %>
-
-<br />
-
-<%= link_to 'New Entry', new_entry_path %>

@@ -34,6 +34,8 @@ class CreateEntries < ActiveRecord::Migration
 	  t.text :other
       t.integer :viewed
 	  t.string :status
+	  t.string :tags_string
+	  t.string :authors_string
       t.references :user
 	  
       t.timestamps

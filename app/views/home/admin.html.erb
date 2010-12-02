@@ -20,7 +20,7 @@
 	<td><%= entry.updated_at %></td>
 	<td><%= link_to "View", entry %></td>
 	<td><%= link_to "Edit", edit_entry_path(entry) %></td>
-	<td><%= link_to "Delete", entry_path(entry), :confirm => 'Are you sure?', :method => :delete %></td>
+	<td><%= link_to "Delete", entry_path(:id => entry, :user_id => entry.user_id), :confirm => 'Are you sure?', :method => :delete %></td>
 </tr>
 <% end %>
 </table>
@@ -43,7 +43,7 @@
 	<td><%= user.last_sign_in_at %></td>
 	<td><%= user.entries.size() %></td>
 	<td><%= link_to "User Details", edit_user_registration_path(:user => user) %></td>
-	<td><%= link_to "View Entries", user_entries_path(user) %></td>
+	<td><%= link_to "View Entries", entries_path %></td>
 	<td><%= link_to "Delete User", user_registration_path(:user => user),
 			:confirm => "Are you sure?", :method => :delete %></td>
 </tr>

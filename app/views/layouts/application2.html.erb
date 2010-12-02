@@ -11,8 +11,7 @@
   <% if user_signed_in? %>
     Signed in as <%= current_user.email %>. Not you?
     <%= link_to "Sign out", destroy_user_session_path %> |
-	<%= link_to "My Account Home", user_root_path %>
-
+	<%= link_to "My Account Home", user_path %>
   <% elsif admin_signed_in? %>
 	Signed in as <%= current_admin.email %>. Not you?
     <%= link_to "Sign out", destroy_admin_session_path %>
@@ -36,9 +35,9 @@
 		<div id="aside">
 			<p>
 				<% if user_signed_in? %>
-					<%= button_to 'Submit Entry', new_entry_path %>
+					<%= button_to 'Submit Entry', new_user_entry_path(current_user) %>
 				<% else %>
-					<%= button_to 'Submit Entry', new_entry_path %>
+					<%= button_to 'Submit Entry', new_entry_path(current_user) %>
 				<% end %>
 			</p>
 			<p>
