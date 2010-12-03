@@ -34,8 +34,8 @@ P4::Application.routes.draw do
   devise_for :admins
   
   
-  #match "/admin" => "home#admin"
-  #match "/user/" => "accounts#index"
+  match "/admin" => "home#admin"
+  match "/user/" => "home#user"
   match "/admin/form/edit" => "form#edit"
   #match "/users/:user_id/entries/new" => "accounts#new"
   #match "/users/:user_id/entries/:id/edit" => "accounts#edit"
