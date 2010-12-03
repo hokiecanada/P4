@@ -1,7 +1,7 @@
 class EntriesController < ApplicationController
 
   before_filter :authenticate, :only => [:new, :create]
-  before_filter :authenticate_owner, :only => [:edit, :update, :destroy]
+  before_filter :authenticate_owner, :only => [:edit, :update, :destroy, :update_status, :admin_edit, :admin_update]
   
   def authenticate
 	authenticate_user!
@@ -56,9 +56,8 @@ class EntriesController < ApplicationController
 	
 	if params[:search]
 		@entries = Entry.search(params[:search])
-		#@entries = search.results
 	elsif @filter
-		@entries = Entry.tagged_with(params[:filter], :order => @sort_by)
+		@entries = Entry.tagged_with(params[:filter])
 	else
 		@entries = Entry.find(:all, :order => @sort_by)
     end
@@ -105,11 +104,15 @@ class EntriesController < ApplicationController
 
   # GET /entries/1/edit
   def edit
-    #@entry = current_user.entries.find(params[:id])
 	@systems = Array.new[System.find(:all).size]
 	@components = Array.new[Component.find(:all).size]
   end
 
+  def admin_edit
+	@systems = Array.new[System.find(:all).size]
+	@components = Array.new[Component.find(:all).size]
+  end
+  
   # POST /entries
   # POST /entries.xml
   def create
@@ -146,7 +149,7 @@ class EntriesController < ApplicationController
   # PUT /entries/1.xml
   def update
 	
-	@entry.status = "Pending"
+	#@entry.status = "Pending"
 	@entry.system_list = ""
 	@systems = params[:systems]
 	@systems.each do |s|
@@ -172,7 +175,52 @@ class EntriesController < ApplicationController
       end
     end
   end
-
+  
+  
+  # PUT /entries/1
+  # PUT /entries/1.xml
+  def admin_update
+	@entry.system_list = ""
+	@systems = params[:systems]
+	@systems.each do |s|
+		@entry.system_list.add(s)
+	end	
+	
+	@entry.comp_list = ""
+	@components = params[:components]
+	@components.each do |c|
+		@entry.comp_list.add(c)
+	end
+	
+	@entry.tags_string = tasks_string(@entry) + " " + comps_string(@entry) + " " + systems_string(@entry)
+	@entry.authors_string = author_string(@entry)
+	
+    respond_to do |format|
+      if @entry.update_attributes(params[:entry])
+        format.html { redirect_to admin_root_path, :notice => 'Entry was successfully updated.' }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @entry.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  
+  def update_status
+	
+    respond_to do |format|
+      if @entry.update_attributes(params[:entry])
+        format.html { redirect_to admin_root_path }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @entry.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  
   # DELETE /entries/1
   # DELETE /entries/1.xml
   def destroy

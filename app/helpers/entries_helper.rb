@@ -49,10 +49,10 @@ module EntriesHelper
 	systems_string = systems.join(' ')
   end
   
-  def author_links(entry)
-    return "" unless entry.author_list.any?
-    author_links = entry.author_list.collect do |tag|
-      link_to tag, :controller => 'author', :action => 'tag', :id => tag
+  def author_links(author_list)
+    return "" unless author_list.any?
+    author_links = author_list.collect do |tag|
+      link_to tag, :controller => 'entries', :action => 'index', :filter => tag
     end
     author_links_string = author_links.join(', ') 
   end

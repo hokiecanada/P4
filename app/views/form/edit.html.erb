@@ -1,10 +1,10 @@
 <h3>Components:</h3>
 <ul><% Component.find(:all).each do |component| %>
 	<li><%= component.tag %>
-	<%= link_to 'Edit', component %>
+	<small><%= link_to 'Edit', component %>
 	<%= link_to 'Delete', component, 
 				:confirm => 'Are you sure?',
-				:method => :delete %></li>
+				:method => :delete %></small></li>
 	<% end %>
 </ul>
   
@@ -22,10 +22,10 @@
 <h3>Systems:</h3>
 <ul><% System.find(:all).each do |system| %>
 	<li><%= system.tag %>
-	<%= link_to 'Edit', system %>
+	<small><%= link_to 'Edit', system %>
 	<%= link_to 'Delete', system, 
 				:confirm => 'Are you sure?',
-				:method => :delete %></li>
+				:method => :delete %></small></li>
 	<% end %>
 </ul>
   
@@ -43,10 +43,10 @@
 <h3>Tasks:</h3>
 <ul><% Task.find(:all).each do |task| %>
 	<li><%= task.tag %>
-	<%= link_to 'Edit', task %>
+	<small><%= link_to 'Edit', task %>
 	<%= link_to 'Delete', task,
 				:confirm => 'Are you sure?',
-				:method => :delete %></li>
+				:method => :delete %></small></li>
 	<% end %>
 </ul>
   
@@ -60,3 +60,5 @@
 		<%= f.submit "Add Task" %>
 	</div>
 <% end %> 
+
+<%= link_to 'Back to Dashboard', admin_root_path %>

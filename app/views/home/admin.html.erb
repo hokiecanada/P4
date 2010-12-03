@@ -1,4 +1,6 @@
+
 <p>
+<h2>Edit entry form:</h2>
 <%= link_to "Edit Entry Form", admin_form_edit_path %>
 </p>
 
@@ -6,21 +8,23 @@
 <h2>Manage entries:</h2>
 <table border="1" cellpadding="5">
 <tr>
-	<th>Summary</th>
-	<th>Status</th>
+	<th>Title</th>
 	<th>Updated</th>
+	<th>Status</th>
 	<th></th>
 	<th></th>
 	<th></th>
 </tr>
 <% @entries.each do |entry| %>
 <tr>
-	<td><%= entry.summary %></td>
-	<td><%= entry.status %></td>
-	<td><%= entry.updated_at %></td>
-	<td><%= link_to "View", entry %></td>
-	<td><%= link_to "Edit", edit_entry_path(entry) %></td>
-	<td><%= link_to "Delete", entry_path(:id => entry, :user_id => entry.user_id), :confirm => 'Are you sure?', :method => :delete %></td>
+	<td><%= link_to entry.title, admin_entry_path(entry) %></td>
+	<td><%= entry.updated_at %></td> 
+	<%= form_for entry, :url => update_status_path(:id => entry, :user_id => entry.user_id) do |f| %>
+		<td><%= f.select :status, options_for_select(["Approved", "Pending", "Rejected"], entry.status) %></td>
+		<td><%= f.submit "Update" %>
+	<% end %><br>
+	<td><%= link_to "Edit", edit_admin_entry_path(:id => entry, :user_id => entry.user_id) %></td>
+	<td><%= link_to "Delete", admin_entry_path(:id => entry, :user_id => entry.user_id), :confirm => 'Are you sure?', :method => :delete %></td>
 </tr>
 <% end %>
 </table>

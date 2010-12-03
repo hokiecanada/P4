@@ -1,0 +1,213 @@
+<%= form_for @entry, :url => admin_update_path(:id => @entry, :user_id => @entry.user_id) do |f| %>
+	<input type="hidden" name="systems[]"> 
+	<input type="hidden" name="components[]"> 
+	
+  <% if @entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
+
+      <ul>
+      <% @entry.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Title of the paper:" %><br />
+    <%= f.text_field :title, :size => 100 %>
+  </div>
+  <div class="field">
+    <%= f.label "Authors:" %><small><i> Use full names and separate by commas. (i.e. Doug Bowman, Cheryl Stinson)</i></small><br />
+    <%= f.text_field :author_list, :size => 100 %>
+  </div>
+  <div class="field">
+    <%= f.label 'Link to the paper:' %><br />
+    <%= f.text_area :paper_url, :cols => 75, :rows => 2 %>
+  </div>
+  <div class="field">
+    <%= f.label "Year in which the experiment took place:" %><br />
+    <%= f.date_select :year, :start_year => Time.now.year - 50, :end_year => Time.now.year, :discard_day => true, :discard_month => true %>
+  </div>
+  <div class="field">
+    <%= f.label "Citation for the paper (include authors, year, conference/journal name, page numbers, volume number, issue number):" %><br />
+    <%= f.text_area :citation, :cols => 75, :rows => 2 %>
+  </div>
+  <div class="field">
+    <%= f.label "Task - Pick the one that best describes the task participants performed in this experiment:" %><br />
+	<% Task.find(:all).each do |t| %>
+		<%= f.radio_button :task_list, t.tag %><%= t.tag %><br>
+	<% end %>
+  </div>
+  <div class="field">
+    <%= f.label "Task - Detailed description of the task participants performed in this experiment:" %><br />
+    <%= f.text_area :task_desc, :cols => 75, :rows => 6 %>
+  </div>
+  <div class="field">
+    <%= f.label "Interface - If participants interacted with the system, describe the interaction techniques and user interface used:" %><br />
+    <%= f.text_area :interface_desc, :cols => 75, :rows => 6 %>
+  </div>
+  <div class="field">
+    <%= f.label "Environment - Characterize the dimensionality of the environment used in this experiment:" %><br>
+	<%= f.radio_button :env_dim, "2.5D" %>2.5D (3D environment where everything is on a ground plane or a terrain)"<br>
+	<%= f.radio_button :env_dim, "3D" %>3D (the parts of the environment and the user's movements are in all three dimensions)<br>
+	<%= f.radio_button :env_dim, "Unreported dimension" %>Not reported<br>
+  </div>
+  <div class="field">
+    <%= f.label "Environment - Characterize the scale of the environment used in this experiment:" %><br>
+	<%= f.radio_button :env_scale, "Small scale" %>Small (0-10 meters on a side)<br>
+	<%= f.radio_button :env_scale, "Medium scale" %>Medium (10-100 meters on a side)<br>
+	<%= f.radio_button :env_scale, "Large scale" %>Large (>100 meters on a side)<br>
+	<%= f.radio_button :env_scale, "Unreported scale" %>Not reported<br>
+  </div>
+  <div class="field">
+    <%= f.label "Environment - Characterize the density of the environment used in this experiment:" %><br>
+	<%= f.radio_button :env_density, "Low density" %>Low (sparse, mostly empty space)<br>
+	<%= f.radio_button :env_density, "Medium density" %>Medium<br>
+	<%= f.radio_button :env_density, "High density" %>High (dense, little empty space)<br>
+	<%= f.radio_button :env_density, "Unreported density" %>Not reported<br>
+  </div>
+  <div class="field">
+    <%= f.label "Environment - Characterize the visual realism of the environment used in this experiment:" %><br>
+	<%= f.radio_button :env_realism, "Low realism" %>Low (abstract, cartoony, simple)<br>
+	<%= f.radio_button :env_realism, "Medium realism" %>Medium<br>
+	<%= f.radio_button :env_realism, "High realism" %>High (looks highly realistic)<br>
+	<%= f.radio_button :env_realism, "Unreported realism" %>Not reported<br>
+  </div>
+  <div class="field">
+    <%= f.label "Environment - Detailed description of the environment used in this experiment:" %><br />
+    <%= f.text_area :env_desc, :cols => 75, :rows => 6 %>
+  </div>
+  <div class="field">
+	<%= f.label "Participants - Number of participants in this experiment:" %><br>
+	<%= f.radio_button :part_num, "1-5 participants" %>1-5<br>
+	<%= f.radio_button :part_num, "6-10 participants" %>6-10<br>
+	<%= f.radio_button :part_num, "11-20 participants" %>11-20<br>
+	<%= f.radio_button :part_num, "21-50 participants" %>21-50<br>
+	<%= f.radio_button :part_num, "50+ participants" %>50+<br>
+	<%= f.radio_button :part_num, "No participants" %>None<br>
+  </div>
+  <div class="field">
+	<%= f.label "Participants - Gender balance of the participants in this experiment:" %><br>
+	<%= f.radio_button :part_gender, "Female only" %>Female only<br>
+	<%= f.radio_button :part_gender, "Mostly female" %>Mostly female<br>
+	<%= f.radio_button :part_gender, "Balanced gender" %>Balanced gender<br>
+	<%= f.radio_button :part_gender, "Mostly male" %>Mostly male<br>
+	<%= f.radio_button :part_gender, "Male only" %>Male only<br>
+	<%= f.radio_button :part_gender, "Unreported gender" %>Not reported<br>
+  </div>
+  <div class="field">
+    <%= f.label "Participants - Age range of the participants in this experiment:" %><br />
+    <%= f.text_field :part_age, :size => 50 %>
+  </div>
+  <div class="field">
+    <%= f.label "Participants - Technical background of the participants in this experiment:" %><br />
+    <%= f.text_area :part_background, :cols => 75, :rows => 6 %>
+  </div>
+  <div class="field">
+    <%= f.label "Participants - Other information about the participants in this experiment:" %><br />
+    <%= f.text_area :part_other, :cols => 75, :rows => 6 %>
+  </div>
+  <div class="field">
+    <%= f.label "How would you characterize this experiment?" %><br>
+	<%= f.radio_button :exp_type, "Controlled experiment", :onclick => "Element.show('controlled'); Element.hide('practical');" %>A controlled experiment varying individual components of immersion independently<br>
+	<%= f.radio_button :exp_type, "Practical comparison", :onclick => "Element.hide('controlled'); Element.show('practical');" %>A practical comparison of multiple real-world VR sysytems<br>
+  </div>
+
+  <div id="controlled">
+	<div class="field">
+		<%= f.label 'Categories of VR displays used in the experiment:' %><br />
+		<% System.find(:all).each do |s| %>
+			<% if @entry.tag_list_on(:systems).include?(s.tag) %>
+				<%= check_box_tag "systems[]", s.tag, true %><%= s.tag %><br>
+			<% else %>
+				<%= check_box_tag "systems[]", s.tag, false %><%= s.tag %><br>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="field">
+		<%= f.label 'Provide as much detail as you can on the technical specifications of the system(s) used in the experiment (dislays, input devices, tracking systems, computers, and anything else about the hardware/software described in the paper):' %><br />
+		<%= f.text_area :systems_tech, :cols => 75, :rows => 6 %>
+	</div>
+	<div>
+		<%= f.label 'What components of immersion were varied in this experiment?' %><br />
+		<% Component.find(:all).each do |c| %>
+			<% if @entry.tag_list_on(:comps).include?(c.tag) %>
+				<%= check_box_tag "components[]", c.tag, true %><%= c.tag %><br>
+			<% else %>
+				<%= check_box_tag "components[]", c.tag, false %><%= c.tag %><br>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="field">
+		<%= f.label 'Describe the different levels of each independent component you identified above:' %><br />
+		<%= f.text_area :comps_desc, :cols => 75, :rows => 6 %>
+	</div>
+	<div class="field">
+		<%= f.label 'Describe any additional independent variables (not components of immersion) and their levels:' %><br />
+		<%= f.text_area :variables_desc, :cols => 75, :rows => 6 %>
+	</div>
+	<div class="field">
+		<%= f.label 'Describe other factors that were held constant:' %><br />
+		<%= f.text_area :constants, :cols => 75, :rows => 6 %>
+	</div>
+  </div>
+  <div class="field" id="practical">
+    <div class="field">
+		<%= f.label 'Categories of VR displays used in the experiment:' %><br />
+		<% System.find(:all).each do |s| %>
+			<% if @entry.tag_list_on(:systems).include?(s.tag) %>
+				<%= check_box_tag "systems[]", s.tag, true %><%= s.tag %><br>
+			<% else %>
+				<%= check_box_tag "systems[]", s.tag, false %><%= s.tag %><br>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="field">
+		<%= f.label 'Provide as much detail as you can on the technical specifications of the system(s) used in the experiment (dislays, input devices, tracking systems, computers, and anything else about the hardware/software described in the paper):' %><br />
+		<%= f.text_area :systems_tech, :cols => 75, :rows => 6 %>
+	</div>
+	<div>
+		<%= f.label 'What components of immersion were involved in this experiment?' %><br />
+		<% Component.find(:all).each do |c| %>
+			<% if @entry.tag_list_on(:comps).include?(c.tag) %>
+				<%= check_box_tag "components[]", c.tag, true %><%= c.tag %><br>
+			<% else %>
+				<%= check_box_tag "components[]", c.tag, false %><%= c.tag %><br>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="field">
+		<%= f.label 'Describe each of the systems in as much detail as possible in terms of the components of immersion:' %><br />
+		<%= f.text_area :systems_desc, :cols => 75, :rows => 6 %>
+	</div>
+  </div>
+  <div class="field">
+    <%= f.label "Describe the specific findings of the experiment that are related to the level of immersion.  Please put each finding in a separate paragraph.  Be sure to state, for each finding, whether a higher level of immersion had a positive, neutral, or negative effect." %><br />
+    <%= f.text_area :findings, :cols => 75, :rows => 12 %>
+  </div>
+  <div class="field">
+	<%= f.label "How general or specific do you feel these findings are (i.e. to what extent do these findings have broad applicability)?" %><br />
+	<%= f.radio_button :specificity, "Highly general" %>Highly general<br>
+	<%= f.radio_button :specificity, "Somewhat general" %>Somewhat general<br>
+	<%= f.radio_button :specificity, "Neither general nor specific" %>Neither general nor specific<br>
+	<%= f.radio_button :specificity, "Somewhat specific" %>Somewhat specific<br>
+	<%= f.radio_button :specificity, "Highly specific" %>Highly specific<br>
+  </div>
+  <div class="field">
+    <%= f.label "What issues might limit the generality or validity of these results?" %><br />
+    <%= f.text_area :issues, :cols => 75, :rows => 6 %>
+  </div>
+  <div class="field">
+    <%= f.label "Summarize the findings of this experiment relevant to the effects of immersion in 1-3 sentences (i.e. give a more general statement about the effects of immersion based on the results of this experiment):" %><br />
+    <%= f.text_area :summary, :cols => 75, :rows => 3 %>
+  </div>
+  <div class="field">
+    <%= f.label "Additional relevant information not captured by this form:" %><br />
+	<%= f.text_area :other, :cols => 75, :rows => 6 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

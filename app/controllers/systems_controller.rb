@@ -6,7 +6,7 @@ class SystemsController < ApplicationController
     authenticate_admin!
     @system = System.create(params[:system])
 	@system.save
-	redirect_to admin_session_path
+	redirect_to admin_form_edit_path
   end
 
   
@@ -15,7 +15,7 @@ class SystemsController < ApplicationController
   def destroy
     @system = System.find(params[:id])
     @system.destroy
-	redirect_to admin_session_path
+	redirect_to admin_form_edit_path
   end
   
 end

@@ -6,7 +6,7 @@ class ComponentsController < ApplicationController
     authenticate_admin!
     @component = Component.create(params[:component])
 	@component.save
-	redirect_to admin_session_path
+	redirect_to admin_form_edit_path
   end
 
   

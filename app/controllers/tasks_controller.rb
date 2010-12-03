@@ -6,7 +6,7 @@ class TasksController < ApplicationController
     authenticate_admin!
     @task = Task.create(params[:task])
 	@task.save
-	redirect_to admin_session_path
+	redirect_to admin_form_edit_path
   end
 
   
@@ -15,7 +15,7 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-	redirect_to admin_session_path
+	redirect_to admin_form_edit_path
   end
   
 end
