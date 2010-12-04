@@ -1,17 +1,9 @@
 class FavoritesController < ApplicationController
 
-  before_filter :get_user
+  before_filter :authenticate_user!
   
-  def get_user
-	authenticate_user!
-	@user = current_user
-  end
-
-  
-  # POST /experiments
-  # POST /experiments.xml
   def create
-    @favorite = @user.favorites.create(params[:id])
+    @favorite = current_user.favorites.create(params[:id])
 	@favorite.entry_id = params[:entry_id]
 	@favorite.save
 	
@@ -19,10 +11,8 @@ class FavoritesController < ApplicationController
   end
 
   
-  # DELETE /experiments/1
-  # DELETE /experiments/1.xml
   def destroy
-    @favorite = @user.favorites.find(params[:id])
+    @favorite = current_user.favorites.find(params[:id])
     @favorite.destroy
 	
 	redirect_to user_root_path

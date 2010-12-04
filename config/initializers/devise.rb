@@ -3,10 +3,10 @@
 Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "please-change-me@config-initializers-devise.com"
+  config.mailer_sender = "cstinson@vt.edu"
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = "Devise::Mailer"
+  config.mailer = "Devise::Mailer"
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -55,7 +55,7 @@ Devise.setup do |config|
   # You can use this to let your user access some features of your application 
   # without confirming the account, but blocking it after a certain period 
   # (ie 2 days). 
-  # config.confirm_within = 2.days
+  config.confirm_within = 0
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
@@ -77,13 +77,13 @@ Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again.
-  # config.timeout_in = 10.minutes
+  config.timeout_in = 1.hour
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
   # :failed_attempts = Locks an account after a number of failed attempts to sign in.
   # :none            = No lock strategy. You should handle locking by yourself.
-  # config.lock_strategy = :failed_attempts
+  config.lock_strategy = :failed_attempts
 
   # Defines which strategy will be used to unlock an account.
   # :email = Sends an unlock link to the user email
@@ -94,7 +94,7 @@ Devise.setup do |config|
 
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.
-  # config.maximum_attempts = 20
+  config.maximum_attempts = 5
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
   # config.unlock_in = 1.hour
@@ -107,7 +107,7 @@ Devise.setup do |config|
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you
   # are using only default views.
-  # config.scoped_views = true
+  config.scoped_views = true
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes.

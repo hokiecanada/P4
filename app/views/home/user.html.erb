@@ -1,20 +1,35 @@
 
 <p>
+<%= link_to 'Edit/Delete Account', edit_user_registration_path %>
+</p>
+
+
+<p>
 <h2>My contributions:</h2>
 <% @entries.each do |entry| %>
 	<%= link_to entry.title, entry_path(entry) %>
 	<small><%= link_to 'Edit', edit_entry_path(entry) %> | 
 	<%= link_to 'Delete', entry_path(:id => entry), :confirm => 'Are you sure?', :method => :delete %></small><br>
-</tr>
 <% end %>
 </p>
+
+
+<p>
+<h2>Entries I have commented on:</h2>
+<% current_user.comments.each do |comment| %>
+	<% entry = Entry.find(comment.entry_id) %>
+	<%= link_to entry.title, entry_path(entry) %><br>
+	Comment: <%= comment.comment %><br>
+	<small><%= link_to 'Delete', entry_comment_path(entry, comment), :confirm => 'Are you sure?', :method => :delete %></small><br>
+<% end %>
+
+
 
 <p>
 <h2>My favorites:</h2>
 <% current_user.favorites.each do |fav| %>
 	<% entry = Entry.find(fav.entry_id) %>
 	<%= link_to entry.title, entry_path(entry) %>
-	<%= link_to 'Delete', favorite_path(fav), :confirm => 'Are you sure?', :method => :delete %></small><br>
-</tr>
+	<small><%= link_to 'Delete', favorite_path(fav), :confirm => 'Are you sure?', :method => :delete %></small><br>
 <% end %>
 </p>

@@ -73,6 +73,9 @@ class AdminEntriesController < ApplicationController
   def update_status	
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
+		if @entry.status == "Approved"
+			Emailer.entry_approved(User.find(@entry.user_id).email).deliver
+		end
         format.html { redirect_to admin_root_path, :notice => 'Entry status updated.' }
         format.xml  { head :ok }
       else

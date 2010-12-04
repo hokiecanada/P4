@@ -1,24 +1,13 @@
 class EntriesController < ApplicationController
 
-  before_filter :authenticate, :only => [:new, :create]
-  before_filter :authenticate_owner, :only => [:edit, :update, :destroy, :update_status, :admin_edit, :admin_update]
-  
-  def authenticate
-	authenticate_user!
-  end
+  before_filter :authenticate_user!, :only => [:new, :create, :edit, :update, :destroy]
+  before_filter :authenticate_owner, :only => [:edit, :update, :destroy]
   
   def authenticate_owner
-	if user_signed_in?
-		@user = User.find(current_user)
-		@entry = current_user.entries.find(params[:id])
+	@user = User.find(current_user)
+	@entry = current_user.entries.find(params[:id])
 		
-		if @entry.user_id != current_user.id
-			redirect_to entry_path(@entry), :notice => 'You do not have permission to do that.'
-		end
-	elsif admin_signed_in?
-		@user = User.find(params[:user_id])
-		@entry = @user.entries.find(params[:id])
-	else
+	if @entry.user_id != current_user.id
 		redirect_to entry_path(@entry), :notice => 'You do not have permission to do that.'
 	end
   end
@@ -47,8 +36,7 @@ class EntriesController < ApplicationController
     end
   end
   
-  # GET /entries
-  # GET /entries.xml
+
   def index
     #@tags = Entry.author_counts
 	@filter = params[:filter]
@@ -71,8 +59,7 @@ class EntriesController < ApplicationController
     end
   end
 
-  # GET /entries/1
-  # GET /entries/1.xml
+
   def show
     @entry = Entry.find(params[:id])
 	@entry.viewed += 1
@@ -85,16 +72,11 @@ class EntriesController < ApplicationController
     end
   end
 
-  # GET /entries/new
-  # GET /entries/new.xml
+
   def new
-    #authenticate_user! 
-	
-	#user = User.find(params[:user_id])
     @entry = current_user.entries.build
 	@systems = Array.new[System.find(:all).size]
 	@components = Array.new[Component.find(:all).size]
-	#redirect_to new_user_entry_path(current_user)
 	
     respond_to do |format|
       format.html # new.html.erb
@@ -102,21 +84,14 @@ class EntriesController < ApplicationController
     end
   end
 
-  # GET /entries/1/edit
+
   def edit
 	@systems = Array.new[System.find(:all).size]
 	@components = Array.new[Component.find(:all).size]
   end
 
-  def admin_edit
-	@systems = Array.new[System.find(:all).size]
-	@components = Array.new[Component.find(:all).size]
-  end
   
-  # POST /entries
-  # POST /entries.xml
   def create
-    #user = User.find(params[:user_id])
     @entry = current_user.entries.create(params[:entry])
 	@entry.viewed = 0
 	@entry.status = "Pending"
@@ -132,7 +107,7 @@ class EntriesController < ApplicationController
 	end
 	
 	@entry.tags_string = tasks_string(@entry) + " " + comps_string(@entry) + " " + systems_string(@entry)
-	@entry.authors_string = author_string(@entry)
+	@entry.authors_string = authors_string(@entry)
 	
     respond_to do |format|
       if @entry.save
@@ -145,11 +120,9 @@ class EntriesController < ApplicationController
     end
   end
 
-  # PUT /entries/1
-  # PUT /entries/1.xml
+
   def update
-	
-	#@entry.status = "Pending"
+	@entry.status = "Pending"
 	@entry.system_list = ""
 	@systems = params[:systems]
 	@systems.each do |s|
@@ -163,7 +136,7 @@ class EntriesController < ApplicationController
 	end
 	
 	@entry.tags_string = tasks_string(@entry) + " " + comps_string(@entry) + " " + systems_string(@entry)
-	@entry.authors_string = author_string(@entry)
+	@entry.authors_string = authors_string(@entry)
 	
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
@@ -176,63 +149,11 @@ class EntriesController < ApplicationController
     end
   end
   
-  
-  # PUT /entries/1
-  # PUT /entries/1.xml
-  def admin_update
-	@entry.system_list = ""
-	@systems = params[:systems]
-	@systems.each do |s|
-		@entry.system_list.add(s)
-	end	
-	
-	@entry.comp_list = ""
-	@components = params[:components]
-	@components.each do |c|
-		@entry.comp_list.add(c)
-	end
-	
-	@entry.tags_string = tasks_string(@entry) + " " + comps_string(@entry) + " " + systems_string(@entry)
-	@entry.authors_string = author_string(@entry)
-	
-    respond_to do |format|
-      if @entry.update_attributes(params[:entry])
-        format.html { redirect_to admin_root_path, :notice => 'Entry was successfully updated.' }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @entry.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-  
-  
-  def update_status
-	
-    respond_to do |format|
-      if @entry.update_attributes(params[:entry])
-        format.html { redirect_to admin_root_path }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @entry.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-  
-  
-  # DELETE /entries/1
-  # DELETE /entries/1.xml
-  def destroy
-  
-    @entry.destroy
 
+  def destroy
+    @entry.destroy
 	respond_to do |format|
-		if admin_signed_in?
-			format.html { redirect_to admin_root_path, :notice => 'Entry was successfully deleted.' }
-		else
-			format.html { redirect_to user_root_path, :notice => 'Entry was successfully deleted.' }
-		end
+		format.html { redirect_to user_root_path, :notice => 'Entry was successfully deleted.' }
 	end
   end
   
@@ -264,7 +185,7 @@ class EntriesController < ApplicationController
   end
   
 
-  def author_string(entry)
+  def authors_string(entry)
 	return "" unless entry.author_list.any?
 	authors = entry.author_list.collect do |tag|
 		tag
