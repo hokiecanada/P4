@@ -5,7 +5,7 @@ class Emailer < ActionMailer::Base
   def entry_received(recipient, entry)     
 	@recipient = recipient
 	@entry = entry
-	@subject = "Entry Received by VR Knowledgebase"
+	@subject "Entry Received by VR Knowledgebase"
 	mail(:to => recipient) do |format|
 		format.html
 	end
