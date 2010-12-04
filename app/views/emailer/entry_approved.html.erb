@@ -1,15 +1,26 @@
-Hi <%= @recipient %>,<br>
-<br>
-This message is to inform you that the following entry has been approved.<br>
-<br>
-Title: <%= @entry.title %><br>
-Created: <%= @entry.created_at %><br>
-Status: <%= @entry.status %><br>
-<br>
-You can view your entry and all comments here:<br>
-<%= link_to 'View Entry', @entry %><br>
-<br>
-Thank you for your contribution,<br>
-<br>
-VR Knowledgebase<br>
-http://www.vr-knowledgebase.org/
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Hi <%= @recipient %>,</h1>
+    <p>
+      This message is to inform you that the following entry has been approved.<br/>
+    </p>
+    <p>
+		Title: <%= @entry.title %><br>
+		Created: <%= @entry.created_at %><br>
+		Status: <%= @entry.status %><br>
+    </p>
+	<p>
+		You can view your entry and all comments here:<br>
+		<%= @view_entry %><br>
+	</p>
+    <p>
+		Thank you for your contribution,<br>
+		VR Knowledgebase<br>
+		http://www.vr-knowledgebase.org/
+	</p>
+  </body>
+</html>
