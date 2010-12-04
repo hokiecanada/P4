@@ -5,6 +5,7 @@ class Emailer < ActionMailer::Base
   def entry_received(recipient, entry)     
 	@recipient = recipient
 	@entry = entry
+	@url = "http://severe-leaf-80.heroku.com/users/sign_in"
 	mail(:to => recipient,
 		 :subject => "Entry Received by VR Knowledgebase") do |format|
 		format.html
