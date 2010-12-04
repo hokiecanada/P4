@@ -111,6 +111,8 @@ class EntriesController < ApplicationController
 	
     respond_to do |format|
       if @entry.save
+		Emailer.entry_received(current_user.email, @entry).deliver
+		Emailer.admin_entry_added('cstinson@vt.edu', @entry).deliver
         format.html { redirect_to user_root_path, :notice => 'Entry was successfully created.' }
         format.xml  { render :xml => @entry, :status => :created, :location => @entry }
       else
@@ -140,6 +142,8 @@ class EntriesController < ApplicationController
 	
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
+		Emailer.entry_updated(current_user.email, @entry).deliver
+		Emailer.admin_entry_updated('cstinson@vt.edu', @entry).deliver
         format.html { redirect_to entry_path(@entry), :notice => 'Entry was successfully updated.' }
         format.xml  { head :ok }
       else

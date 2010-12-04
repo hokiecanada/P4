@@ -1,0 +1,12 @@
+Administrator,
+
+This message is to inform you that a new entry has been submitted to the knowledgebase.
+
+Title: <%= link_to @entry.title, @entry %>
+Author: <%= User.find(@entry.user_id).email %>
+Created: <%= @entry.created_at %>
+
+<%= link_to 'Admin Sign in', new_admin_session_path %>
+
+VR Knowledgebase
+http://severe-leaf-80.heroku.com/

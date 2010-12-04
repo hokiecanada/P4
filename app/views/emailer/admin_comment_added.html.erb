@@ -1,0 +1,14 @@
+Administrator,
+
+This message is to inform you that a new comment has been submitted to the knowledgebase.
+
+Entry: <%= link_to @entry.title, @entry %>
+
+Comment: <%= @comment.comment %>
+Author: <%= User.find(@comment.user_id).email %>
+Added: <%= @comment.created_at %>
+
+<%= link_to 'Admin Sign in', new_admin_session_path %>
+
+VR Knowledgebase
+http://www.vr-knowledgebase.org/

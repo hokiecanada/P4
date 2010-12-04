@@ -1,14 +1,16 @@
 Hi <%= @recipient %>,
 
-This message is to inform you that the following comment has been made on your entry:
+This message is to inform you that the following comment has been made on your entry.
 
 Entry Title: <%= @title %>
-Comment: <%= @comment %>
-Commenter: <%= @commenter %>
+Created: <% @entry.created_at %>
+
+Comment: <%= @comment.comment %>
+Author: <%= User.find(@comment.user_id).email %>
+Added: <%= @comment.created_at %>
 
 You can view your entry and all comments here:
-<% link_to @entry %>
-
+<%= link_to 'View Entry', @entry %>
 
 VR Knowledgebase
-http://severe-leaf-80.heroku.com/
+http://www.vr-knowledgebase.org/

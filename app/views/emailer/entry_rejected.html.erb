@@ -1,12 +1,12 @@
 Hi <%= @recipient %>,
 
-Due to innappropriate content the following entry has been rejected:
+Due to innappropriate content the following entry has been rejected.
 
-Title: <%= @title %>
-Date: <%= @date %>
-Status: <%= @status %>
+Title: <%= @entry.title %>
+Created: <%= @entry.created_at %>
+Status: <%= @entry.status %>
 
 Please contact the site administrator for more information,
 
 VR Knowledgebase
-http://severe-leaf-80.heroku.com/
+http://www.vr-knowledgebase.org/

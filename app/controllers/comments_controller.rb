@@ -14,6 +14,8 @@ class CommentsController < ApplicationController
 	@comment.user_id = current_user.id
 	@comment.save
 	
+	Emailer.comment_added(User.find(@entry.user_id).email, @entry, @comment).deliver
+	Emailer.admin_comment_added('cstinson@vt.edu', @entry, @comment).deliver
 	redirect_to entry_path(@entry)
   end
 

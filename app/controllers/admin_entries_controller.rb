@@ -60,6 +60,7 @@ class AdminEntriesController < ApplicationController
 	
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
+		Emailer.entry_updated_by_admin(User.find(@entry.user_id).email, @entry).deliver
         format.html { redirect_to admin_entry_path(@entry), :notice => 'Entry was successfully updated.' }
         format.xml  { head :ok }
       else
@@ -74,7 +75,10 @@ class AdminEntriesController < ApplicationController
     respond_to do |format|
       if @entry.update_attributes(params[:entry])
 		if @entry.status == "Approved"
-			Emailer.entry_approved(User.find(@entry.user_id).email, @entry.title, @entry.updated_at).deliver
+			Emailer.entry_approved(User.find(@entry.user_id).email, @entry).deliver
+		elsif @entry.status == "Rejected"
+			Emailer.entry_rejected(User.find(@entry.user_id).email, @entry).deliver
+			#@entry.destroy
 		end
         format.html { redirect_to admin_root_path, :notice => 'Entry status updated.' }
         format.xml  { head :ok }

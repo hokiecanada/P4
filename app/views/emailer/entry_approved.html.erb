@@ -1,11 +1,15 @@
 Hi <%= @recipient %>,
 
-This message is to inform you that the following entry has been approved:
+This message is to inform you that the following entry has been approved.
 
-Title: <%= @title %>
-Date: <%= @date %>
+Title: <%= @entry.title %>
+Created: <%= @entry.created_at %>
+Status: <%= @entry.status %>
+
+You can view your entry and all comments here:
+<%= link_to 'View Entry', @entry %>
 
 Thank you for your contribution,
 
 VR Knowledgebase
-http://severe-leaf-80.heroku.com/
+http://www.vr-knowledgebase.org/

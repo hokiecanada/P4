@@ -1,13 +1,12 @@
-Hi <%= @recipient %>,
+Administrator,
 
 This message is to inform you that the following entry has been updated in the knowledgebase.
 
-Title: <%= @entry.title, @entry %>
+Title: <%= link_to @entry.title, @entry %>
+Author: <%= User.find(@entry.user_id).email %>
 Updated: <%= @entry.updated_at %>
-Status: <%= @entry.status %>
 
-You can view your entry and all comments here:
-<%= link_to 'View Entry', @entry %>
+<%= link_to 'Admin Sign in', new_admin_session_path %>
 
 VR Knowledgebase
 http://www.vr-knowledgebase.org/
