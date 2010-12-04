@@ -15,8 +15,9 @@ class Emailer < ActionMailer::Base
   def entry_approved(recipient, entry)     
 	@recipient = recipient
 	@entry = entry
-	@subject = "Entry Approved by VR Knowledgebase"
-	mail(:to => recipient) do |format|
+	@url = "http://severe-leaf-80.heroku.com/users/sign_in"
+	mail(:to => recipient,
+		 :subject => "Entry Approved by VR Knowledgebase") do |format|
 		format.html
 	end
   end
@@ -24,8 +25,9 @@ class Emailer < ActionMailer::Base
   def entry_rejected(recipient, entry)     
 	@recipient = recipient
 	@entry = entry
-	@subject = "Entry Rejected by VR Knowledgebase"
-	mail(:to => recipient) do |format|
+	@url = "http://severe-leaf-80.heroku.com/users/sign_in"
+	mail(:to => recipient,
+		 :subject => "Entry Rejected by VR Knowledgebase") do |format|
 		format.html
 	end
   end
@@ -33,8 +35,9 @@ class Emailer < ActionMailer::Base
   def entry_updated(recipient, entry)     
 	@recipient = recipient
 	@entry = entry
-	@subject = "Entry Updated in VR Knowledgebase"
-	mail(:to => recipient) do |format|
+	@url = "http://severe-leaf-80.heroku.com/users/sign_in"
+	mail(:to => recipient,
+		 :subject => "Entry Updated in VR Knowledgebase") do |format|
 		format.html
 	end
   end
@@ -42,8 +45,9 @@ class Emailer < ActionMailer::Base
   def entry_updated_by_admin(recipient, entry)     
 	@recipient = recipient
 	@entry = entry
-	@subject = "Entry Updated in VR Knowledgebase"
-	mail(:to => recipient) do |format|
+	@url = "http://severe-leaf-80.heroku.com/users/sign_in"
+	mail(:to => recipient,
+		 :subject => "Entry Updated in VR Knowledgebase") do |format|
 		format.html
 	end
   end
@@ -52,8 +56,9 @@ class Emailer < ActionMailer::Base
 	@recipient = recipient
 	@entry = entry
 	@comment = comment
-	@subject = "Someone has commented on your entry in the VR Knowledgebase"
-	mail(:to => recipient) do |format|
+	@url = "http://severe-leaf-80.heroku.com/users/sign_in"
+	mail(:to => recipient,
+		 :subject => "Someone has commented on your entry in the VR Knowledgebase") do |format|
 		format.html
 	end
   end
@@ -61,8 +66,9 @@ class Emailer < ActionMailer::Base
   def admin_entry_added(recipient, entry)     
 	@recipient = recipient
 	@entry = entry
-	@subject = "Entry Added to VR Knowledgebase"
-	mail(:to => recipient) do |format|
+	@url = "http://severe-leaf-80.heroku.com/admins/sign_in"
+	mail(:to => recipient,
+		 :subject => "Entry Added to VR Knowledgebase") do |format|
 		format.html
 	end
   end
@@ -70,8 +76,9 @@ class Emailer < ActionMailer::Base
   def admin_entry_updated(recipient, entry)     
 	@recipient = recipient
 	@entry = entry
-	@subject = "Entry Updated in VR Knowledgebase"
-	mail(:to => recipient) do |format|
+	@url = "http://severe-leaf-80.heroku.com/admins/sign_in"
+	mail(:to => recipient,
+		 :subject => "Entry Updated in VR Knowledgebase") do |format|
 		format.html
 	end
   end
@@ -80,8 +87,9 @@ class Emailer < ActionMailer::Base
 	@recipient = recipient
 	@entry = entry
 	@comment = comment
-	@subject = "Comment Added to VR Knowledgebase"
-	mail(:to => recipient) do |format|
+	@url = "http://severe-leaf-80.heroku.com/admins/sign_in"
+	mail(:to => recipient,
+		 :subject => "Comment Added to VR Knowledgebase") do |format|
 		format.html
 	end
   end
