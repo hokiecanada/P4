@@ -47,4 +47,29 @@ P4::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   
+    require 'tlsmail'
+  Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.perform_deliveries = true
+  ActionMailer::Base.default_charset = "utf-8"
+  ActionMailer::Base.raise_delivery_errors = true
+
+  #ActionMailer::Base.smtp_settings = {
+#	:address         => 'auth.smtp.vt.edu',
+	#:port            => 465,
+	#:tls             => true,
+	#:authentication  => :login,
+	#:user_name       => 'cstinson',
+	#:password        => 'number1'
+  #}
+  
+  ActionMailer::Base.smtp_settings = {
+  :address         => 'smtp.gmail.com',
+  :port            => 587,
+  :tls             => true,
+  :authentication  => :login,
+  :user_name       => 'hokiecanada',
+  :password        => 'number17'
+}
+  
 end
