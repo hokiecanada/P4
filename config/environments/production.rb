@@ -54,22 +54,22 @@ P4::Application.configure do
   ActionMailer::Base.default_charset = "utf-8"
   ActionMailer::Base.raise_delivery_errors = true
 
-  #ActionMailer::Base.smtp_settings = {
-#	:address         => 'auth.smtp.vt.edu',
-	#:port            => 465,
-	#:tls             => true,
-	#:authentication  => :login,
-	#:user_name       => 'cstinson',
-	#:password        => 'number1'
-  #}
-  
   ActionMailer::Base.smtp_settings = {
-  :address         => 'smtp.gmail.com',
-  :port            => 587,
-  :tls             => true,
-  :authentication  => :login,
-  :user_name       => 'hokiecanada',
-  :password        => 'number17'
+	:address         => 'auth.smtp.vt.edu',
+	:port            => 465,
+	:tls             => true,
+	:authentication  => :login,
+	:user_name       => 'cstinson',
+	:password        => 'number1'
+  }
+  
+  #ActionMailer::Base.smtp_settings = {
+  #:address         => 'smtp.gmail.com',
+  #:port            => 587,
+  #:tls             => true,
+  #:authentication  => :login,
+  #:user_name       => 'hokiecanada',
+  #:password        => 'number17'
 }
   
 end

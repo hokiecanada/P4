@@ -14,7 +14,7 @@
 <p>
   Tags: <%= @entry.tags_string %><br>
   <b>Paper title: </b><%= @entry.title %><br>
-  <b>Authors: </b><%= Entry.author_links(@entry) %><br>
+  <b>Authors: </b><%= author_links(@entry) %><br>
   <b>Citation: </b><%= @entry.citation %><br> 
   <b>URL: </b><%= link_to @entry.paper_url %><br>
 </p>
