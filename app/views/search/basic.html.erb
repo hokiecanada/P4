@@ -1,0 +1,34 @@
+<div id="cloud">
+	<% tag_cloud(@tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
+		<%= link_to tag.name, search_path(:tag => tag.name), { :class => css_class } %> 
+	<% end %>
+</div>
+
+<p>
+	<h2>Results:</h2>
+</p>
+	
+<% @entries.each do |entry| %>
+<p>
+	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
+	<% entry.tag_list_on(:authors).each_with_index do |tag,i| %>
+		<%= link_to tag, entries_path(:filter => tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
+	<% end %><br>
+	
+	<%= entry.exp_type %><br>
+	
+	Tags: 
+	<% entry.tag_list_on(:tasks).each do |tag| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %>, 
+	<% end %>
+	<% entry.tag_list_on(:systems).each do |tag| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %>, 
+	<% end %>
+	<% entry.tag_list_on(:comps).each_with_index do |tag,i| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %><% if i < entry.tag_list_on(:comps).size - 1 %>, <% end %>
+	<% end %>
+	<br>
+	Times Viewed: <%= entry.viewed %><br>
+<% end %>
+</p>
+<%= will_paginate @entries %>

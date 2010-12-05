@@ -1,37 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Project4</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
+	<title>Project4</title>
+	<%= stylesheet_link_tag :all %>
+	<%= javascript_include_tag :defaults %>
+	<%= csrf_meta_tag %>
 </head>
-<body>
-<div id="user_nav">
-  <% if user_signed_in? %>
-    Signed in as <%= current_user.email %>. Not you?
-    <%= link_to "Sign out", destroy_user_session_path %> |
-	<%= link_to "My Account Home", user_root_path %>
 
-  <% elsif admin_signed_in? %>
-	Signed in as <%= current_admin.email %>. Not you?
-    <%= link_to "Sign out", destroy_admin_session_path %>
-  <% else %>
-    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
-	 | <%= link_to "Admin sign-in", new_admin_session_path %>
-  <% end %>
+<body>
+<div id="top">
+	<div id="sign_in">
+		<% if user_signed_in? %>
+			Signed in as <%= current_user.email %>. Not you?
+			<%= link_to "Sign out", destroy_user_session_path %> |
+			<%= link_to "My Account Home", user_root_path %>
+		<% elsif admin_signed_in? %>
+			Signed in as <%= current_admin.email %>. Not you?
+			<%= link_to "Sign out", destroy_admin_session_path %>
+		<% else %>
+			<%= link_to "Sign up", new_user_registration_path %> or 
+			<%= link_to "sign in", new_user_session_path %> | 
+			<%= link_to "Admin sign-in", new_admin_session_path %>
+		<% end %>
+	</div>
+	
+	<div id="search">
+		<%= form_tag entries_path, :method => 'get' do %>
+			<%= text_field_tag :search, @search, :size => 20 %>
+			<%= submit_tag "Search", :name => nil %>
+		<% end %>
+	</div>
 </div>
+
 <div id="container">
 	<div id="header">
 		<h1>
 			VR Knowledgebase
 		</h1>
 	</div>
+	
 	<div id="navigation">
 		<ul>
 
 		</ul>
 	</div>
+	
 	<div id="content-container">
 		<div id="aside">
 			<p>
@@ -63,22 +76,15 @@
 				</p>
 			</p>
 		</div>
+		
 		<div id="content">
-			<p>
-				<%= form_tag entries_path, :method => 'get' do %>
-					<%= text_field_tag :search, @search, :size => 75 %>
-					<%= submit_tag "Search", :name => nil %>
-				<% end %>
-			</p>
-			<p>
-				<%= yield %>
-			</p>
+			<p><%= yield %></p>
 		</div>
-
 	</div>
-		<div id="footer">
-			Copyright
-		</div>
+	
+	<div id="footer">
+		Copyright
+	</div>
 </div>
 
 </body>

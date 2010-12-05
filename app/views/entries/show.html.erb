@@ -1,10 +1,12 @@
 <%= auto_discovery_link_tag(:rss, entry_url(@entry, :format => 'rss')) %>
 <p id="notice"><%= notice %></p>
 
-<p>
-	<small><%= link_to 'Dashboard', user_root_path %> << 
-	New Entry</small>
-</p>
+<% if user_signed_in? %>
+	<p>
+		<small><%= link_to 'Dashboard', user_root_path %> << 
+		New Entry</small>
+	</p>
+<% end %>
 
 <% if User.find(@entry.user_id) == current_user %>
 	<%= button_to 'Edit Entry', edit_entry_path(@entry) %>

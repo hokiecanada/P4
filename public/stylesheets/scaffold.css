@@ -64,8 +64,24 @@ div.field, div.actions {
 
 #header
 {
+	clear: both;
 	background: #ccc;
 	padding: 20px;
+}
+
+#top
+{
+	width: 100%;
+}
+
+#sign_in {
+	float: left;
+	width: 60%;
+}
+
+#search {
+	display: inline;
+	width: 30%;
 }
 
 #navigation
@@ -110,9 +126,12 @@ div.field, div.actions {
 	height: 1%;
 }
 
-.css1 {font-size: 1.0em;}
-.css2 {font-size: 1.2em;}
-.css3 {font-size: 1.4em;}
-.css4 {font-size: 1.6em;}
-.css5 {font-size: 1.8em;}
-.css6 {font-size: 2.0em;}
+#cloud {
+	background-color: gold;
+}
+.css1 {font-size: 1.0em; color: blue; text-decoration: none; padding: 10px; }
+.css2 {font-size: 1.2em; color: magenta; text-decoration: none; padding: 10px; }
+.css3 {font-size: 1.4em; color: green; text-decoration: none; padding: 10px; }
+.css4 {font-size: 1.6em; color: purple; text-decoration: none; padding: 10px; }
+.css5 {font-size: 1.8em; color: orange; text-decoration: none; padding: 10px; }
+.css6 {font-size: 2.0em; color: brown; text-decoration: none; padding: 10px; }

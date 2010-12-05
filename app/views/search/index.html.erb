@@ -1,0 +1,12 @@
+<div id="cloud">
+	<% tag_cloud(@tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
+		<%= link_to tag.name, search_tag_path(:tag => tag.name), { :class => css_class } %> 
+	<% end %>
+</div>
+
+<p>
+	<%= form_tag search_basic_path(:search => @search) do %>
+		<%= text_field_tag :search, @search %>
+		<%= submit_tag "Search" %>
+	<% end %>
+</p>
