@@ -57,7 +57,7 @@ div.field, div.actions {
 
 #container
 {
-	margin: 0 auto;
+	margin: 0 0 0 0;
 	width: 100%;
 	background: #fff;
 }
@@ -76,16 +76,19 @@ div.field, div.actions {
 
 #sign_in {
 	float: left;
-	width: 60%;
+	display: inline;
+	width: 50%;
 }
 
 #search {
+	float: right;
 	display: inline;
-	width: 30%;
+	width: 40%;
 }
 
 #navigation
 {
+	clear: both;
 	float: left;
 	width: 100%;
 	background: #333;
@@ -93,29 +96,30 @@ div.field, div.actions {
 
 #content-container
 {
+	clear: both;
 	float: left;
 	width: 100%;
-	background: #FFF url(layout-two-liquid-background.gif) repeat-y 68% 0;
+	background: #FFF;
+}
+
+#aside
+{
+	float: left;
+	width: 30%;
+	margin: 0;
+	display: inline;
 }
 
 #content
 {
 	float: right;
-	width: 65%;
-	padding: 20px 0;
-	margin: 0 0 0 4%;
+	width: 70%;
+	padding: 0;
+	margin: 0;
 	display: inline;
 }
 
-#aside
-{
-	clear: right;
-	float: left;
-	width: 25%;
-	padding: 20px 0;
-	margin: 0 3% 0 0;
-	display: inline;
-}
+
 
 #footer
 {

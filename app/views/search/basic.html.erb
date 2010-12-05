@@ -10,7 +10,7 @@
 		<%= select_tag :search_by, options_for_select(["All", "Author"], @search_by) %>
 		<%= submit_tag "Search", :name => nil %>
 	<% end %>
-	<%= link_to "Advanced Search", search_advanced_path(:search => @search, :search_by => @search_by) %>
+	<%= link_to "Advanced Search", search_advanced_path %>
 </p>
 
 <p>
