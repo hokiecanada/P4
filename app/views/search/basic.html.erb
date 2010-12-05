@@ -1,8 +1,17 @@
 <div id="cloud">
 	<% tag_cloud(@tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
-		<%= link_to tag.name, search_path(:tag => tag.name), { :class => css_class } %> 
+		<%= link_to tag.name, search_tag_path(:tag => tag.name), { :class => css_class } %> 
 	<% end %>
 </div>
+
+<p>
+	<%= form_tag search_basic_path, :method => 'get' do %>
+		<%= text_field_tag :search, @search, :size => 75 %>
+		<%= select_tag "search_by", options_for_select(["All", "Author", "Title"], @search_by) %>
+		<%= submit_tag "Search", :name => nil %>
+	<% end %>
+	<%= link_to "Advanced Search", search_advanced_path(@search, @search_by) %>
+</p>
 
 <p>
 	<h2>Results:</h2>
