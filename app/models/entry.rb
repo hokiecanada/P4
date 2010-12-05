@@ -28,8 +28,8 @@ class Entry < ActiveRecord::Base
     exp_type		'C'
   end
   
-  #index('title') { title }
-  #index('author') { authors_string }
+  index('title') { title }
+  index('author') { authors_string }
 
   belongs_to :user
   

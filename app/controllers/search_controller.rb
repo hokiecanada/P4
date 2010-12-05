@@ -72,7 +72,8 @@ class SearchController < ApplicationController
 	started = false
 	
 	if @author != "" && !@author.nil?
-		@entries = @entries && Entry.tagged_with(@author, :on => :author)
+		#@entries = @entries && Entry.tagged_with(@author, :on => :author)
+		@entries = @entries && Entry.search_author(@author)
 		started = true
 	end
 	if !@keyword.nil? && @keyword != "" 

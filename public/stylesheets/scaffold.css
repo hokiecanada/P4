@@ -131,9 +131,9 @@ div.field, div.actions {
 }
 
 #cloud {
-	background-color: gold;
+	background-color: #66DDEE;
 }
-.css1 {font-size: 1.0em; color: blue; text-decoration: none; padding: 10px; }
+.css1 {font-size: 1.0em; color: white; text-decoration: none; padding: 10px; }
 .css2 {font-size: 1.2em; color: magenta; text-decoration: none; padding: 10px; }
 .css3 {font-size: 1.4em; color: green; text-decoration: none; padding: 10px; }
 .css4 {font-size: 1.6em; color: purple; text-decoration: none; padding: 10px; }
