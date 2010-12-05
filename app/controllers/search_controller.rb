@@ -30,7 +30,7 @@ class SearchController < ApplicationController
   
   def basic
 	@search = params[:search]
-	@search_by = params[:search_by]
+	@search_by = "Author"
 	
 	if @search_by == "All"
 		@entries = Entry.search(@search)
