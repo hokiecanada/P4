@@ -1,13 +1,43 @@
 <div id="cloud">
 	<% tag_cloud(@tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
-		<%= link_to tag.name, search_path(:tag => tag.name), { :class => css_class } %> 
+		<%= link_to tag.name, search_tag_path(:tag => tag.name), { :class => css_class } %> 
 	<% end %>
 </div>
 
 <p>
+	<%= form_tag search_advanced_path, :method => 'get' do |f| %>
+		<%= text_field_tag :search, @search, :size => "75" %>
+		<%= select_tag :search_by, options_for_select(["All", "Author"], @search_by) %>
+		<%= submit_tag "Search", :name => nil %><br>
+		
+		<%= date_select "range", "year", {:start_year => Time.now.year, :end_year => Time.now.year-50, :discard_day => true, :discard_month => true, :include_blank => true} , {:default => @year_start} %>
+		<%= select_tag :exp_type, options_for_select(["","Controlled experiment", "Practical comparison"], @exp_type) %>
+		<%= select_tag :env_scale, options_for_select(["","Small scale", "Medium scale", "Large scale"], @env_scale) %>
+		
+		<%= submit_tag "Search", :name => nil %><br>
+	<% end %>
+	<%= link_to "Basic Search", search_basic_path(:search => @search, :search_by => @search_by) %><br>
+</p>
+OR
+
+Search by author
+Search by component of immersion
+Search by task
+Search by system type
+Search by environment:
+	size
+	realism
+	etc.
+Search by exp type
+Search by 
+<h2>Narrow search results:</h2>
+
+
+<% if !@entries.nil? %>
+<p>
 	<h2>Results:</h2>
 </p>
-	
+
 <% @entries.each do |entry| %>
 <p>
 	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
@@ -32,3 +62,4 @@
 <% end %>
 </p>
 <%= will_paginate @entries %>
+<% end %>

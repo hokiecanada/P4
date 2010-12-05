@@ -10,13 +10,14 @@
 		<%= select_tag :search_by, options_for_select(["All", "Author"], @search_by) %>
 		<%= submit_tag "Search", :name => nil %>
 	<% end %>
-	<%= link_to "Advanced Search", search_advanced_path(:entry => @entry, :search => @search, :search_by => @search_by) %>
+	<%= link_to "Advanced Search", search_advanced_path(:search => @search, :search_by => @search_by) %>
 </p>
 
 <p>
 	<h2>Results:</h2>
 </p>
-	
+
+<% if !@entries.nil? %>
 <% @entries.each do |entry| %>
 <p>
 	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
@@ -41,3 +42,4 @@
 <% end %>
 </p>
 <%= will_paginate @entries %>
+<% end %>

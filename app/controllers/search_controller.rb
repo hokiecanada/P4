@@ -38,7 +38,9 @@ class SearchController < ApplicationController
 		@entries = Entry.tagged_with(@search, :on => :authors)
 	end
 	
-	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
+	if !@entries.nil?
+		@entries = @entries.paginate	:page =>params[:page], :per_page => 5
+	end
 	
 	respond_to do |format|
       format.html # basic.html.erb
@@ -47,7 +49,44 @@ class SearchController < ApplicationController
   
   
   def advanced
+	@search = params[:search]
+	@search_by = params[:search_by]
+	if params[:range].nil? || params[:range][:"year(1i)"] == ""
+		@year_start = nil
+		@year_end = nil
+	else
+		@year_start = Date.civil(params[:range][:"year(1i)"].to_i,1,1)#params[:range][:"year(2i)"].to_i,params[:range][:"year(3i)"].to_i)
+		year_end = Date.civil(params[:range][:"year(1i)"].to_i,12,31)
+		#@year = params[:range][:"year(1i)"]
+	end
+	@exp_type = params[:exp_type]
+	@env_scale = params[:env_scale]
 	
+	
+	if @search_by == "All" && @search != ""
+		@entries = Entry.search(@search)
+	elsif @search_by == "Author" && @search != ""
+		@entries = Entry.tagged_with(@search, :on => :authors)
+	else
+		@entries = Entry.find(:all)
+	end
+	if !@year_start.nil?
+		@entries = @entries && Entry.find(:all, :conditions => ["year >= ? and year <= ?", @year_start, year_end] )
+	end
+	if @exp_type != "" && !@exp_type.nil?
+		@entries = @entries && Entry.find_all_by_exp_type(@exp_type)
+	end
+	if @env_scale != "" && !@env_scale.nil?
+		@entries = @entries && Entry.find_all_by_env_scale(@env_scale)
+	end
+	
+	if !@entries.nil?
+		@entries = @entries.paginate	:page =>params[:page], :per_page => 5
+	end
+	
+	respond_to do |format|
+      format.html # basic.html.erb
+    end
   end
   
 end
