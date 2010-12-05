@@ -54,6 +54,7 @@ class AdminEntriesController < ApplicationController
 
 
   def update
+	#@entry = @user.entries.find(params[:id])
 	@entry.status = "Pending"
 	@entry.system_list = ""
 	@systems = params[:systems]
@@ -71,7 +72,7 @@ class AdminEntriesController < ApplicationController
 	@entry.authors_string = author_string(@entry)
 	
     respond_to do |format|
-      if @entry.update_attributes(params[:entry])
+      if @entry.save
 		Emailer.entry_updated_by_admin(User.find(@entry.user_id).email, @entry).deliver
         format.html { redirect_to admin_entry_path(@entry), :notice => 'Entry was successfully updated.' }
         format.xml  { head :ok }

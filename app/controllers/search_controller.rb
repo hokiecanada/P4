@@ -33,11 +33,11 @@ class SearchController < ApplicationController
 	@search_by = params[:search_by]
 	
 	if @search_by == "All"
-		@entries = Entry.search(@search).map { |x| x.rank }
+		@entries = Entry.search(@search)
 	elsif @search_by == "Title"
-		@entries = Entry.search_title(@search).map { |x| x.rank }
+		@entries = Entry.search_title(@search)
 	elsif @search_by == "Author"
-		@entries = Entry.search_author(@search).map { |x| x.rank }
+		@entries = Entry.search_author(@search)
 	end
 	
 	@entries = @entries.paginate	:page =>params[:page], :per_page => 5

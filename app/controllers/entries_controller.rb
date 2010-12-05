@@ -145,7 +145,7 @@ class EntriesController < ApplicationController
 	@entry.authors_string = authors_string(@entry)
 	
     respond_to do |format|
-      if @entry.update_attributes(params[:entry])
+      if @entry.save
 		Emailer.entry_updated(current_user.email, @entry).deliver
 		Emailer.admin_entry_updated("cstinson@vt.edu", @entry).deliver
         format.html { redirect_to entry_path(@entry), :notice => 'Entry was successfully updated.' }
