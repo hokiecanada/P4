@@ -33,20 +33,13 @@ class SearchController < ApplicationController
 	@search_by = params[:search_by]
 	
 	if @search_by == "All"
-		temp = Entry.search(:include => [:comments]) do
-			keywords(params[:search])
-		end
+		@entries = Entry.search(@search)
 	elsif @search_by == "Title"
-		temp = Entry.search_title(:include => [:comments]) do
-			keywords(params[:search])
-		end	
+		@entries = Entry.search_title(@search)
 	else
-		temp = Entry.search_author(:include => [:comments]) do
-			keywords(params[:search])
-		end	
+		@entries = Entry.search_author(@search)
 	end
 	
-	@entries = temp.results
 	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
 	
 	respond_to do |format|
