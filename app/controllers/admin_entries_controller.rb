@@ -54,7 +54,6 @@ class AdminEntriesController < ApplicationController
 
 
   def update
-	#@entry = @user.entries.find(params[:id])
 	@entry.status = "Pending"
 	@entry.system_list = ""
 	@systems = params[:systems]
