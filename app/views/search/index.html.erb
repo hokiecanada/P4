@@ -5,8 +5,9 @@
 </div>
 
 <p>
-	<%= form_tag search_basic_path(:search => @search) do %>
-		<%= text_field_tag :search, @search %>
-		<%= submit_tag "Search" %>
+	<%= form_for search_basic_path(:search => @search, :search_by => @search_by) do |f| %>
+		<%= f.text_field :search, :size => 75 %>
+		<%= f.select :search_by, options_for_select(["All", "Author", "Title"], @search_by) %>
+		<%= f.submit "Search" %>
 	<% end %>
 </p>

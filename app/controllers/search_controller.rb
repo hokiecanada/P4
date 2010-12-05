@@ -30,14 +30,27 @@ class SearchController < ApplicationController
   
   def basic
 	@search = params[:search]
-	temp = Entry.search(:include => [:comments]) do
-		keywords(params[:search])
+	@search_by = params[:search_by]
+	
+	if @search_by == "All"
+		temp = Entry.search(:include => [:comments]) do
+			keywords(params[:search])
+		end
+	elsif @search_by == "Title"
+		temp = Entry.search_title(:include => [:comments]) do
+			keywords(params[:search])
+		end	
+	else
+		temp = Entry.search_author(:include => [:comments]) do
+			keywords(params[:search])
+		end	
 	end
+	
 	@entries = temp.results
 	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
 	
 	respond_to do |format|
-      format.html # show.html.erb
+      format.html # basic.html.erb
     end
   end
   
