@@ -5,9 +5,10 @@
 </div>
 
 <p>
-	<%= form_for search_basic_path(:search => @search, :search_by => @search_by) do |f| %>
-		<%= f.text_field :search, :size => 75 %>
-		<%= f.select :search_by, options_for_select(["All", "Author", "Title"], @search_by) %>
-		<%= f.submit "Search" %>
+	<%= form_tag search_basic_path, :method => 'get' do %>
+		<%= text_field_tag :search, @search, :size => 75 %>
+		<%= select_tag "search_by", options_for_select(["All", "Author", "Title"], @search_by) %>
+		<%= submit_tag "Search", :name => nil %>
 	<% end %>
+	<%= link_to "Advanced Search", search_advanced_path(@search, @search_by) %>
 </p>
