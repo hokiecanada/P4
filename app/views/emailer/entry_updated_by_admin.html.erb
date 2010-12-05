@@ -1,13 +1,27 @@
-Hi <%= @recipient %>,
-
-This message is to inform you that the following entry has been updated by the site administrator.
-
-Title: <%= @entry.title, @entry %>
-Updated: <%= @entry.updated_at %>
-Status: <%= @entry.status %>
-
-You can view your entry and all comments here:
-<%= link_to 'View Entry', @entry %>
-
-VR Knowledgebase
-http://www.vr-knowledgebase.org/
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+		Hi <%= @recipient %>,
+    </p>
+	<p>
+		This message is to inform you that the following entry has been updated by the site administrator.<br/>
+    </p>
+    <p>
+		Title: <%= @entry.title %><br/>
+		Updated: <%= @entry.updated_at %><br/>
+		Status: <%= @entry.status %><br/>
+    </p>
+	<p>
+		For more details please log into your account:<br/>
+		<%= @url %><br/>
+	</p>
+    <p>
+		VR Knowledgebase<br/>
+		http://www.vr-knowledgebase.org/
+	</p>
+  </body>
+</html>

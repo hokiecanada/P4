@@ -1,12 +1,26 @@
-Hi <%= @recipient %>,
-
-Due to innappropriate content the following entry has been rejected.
-
-Title: <%= @entry.title %>
-Created: <%= @entry.created_at %>
-Status: <%= @entry.status %>
-
-Please contact the site administrator for more information,
-
-VR Knowledgebase
-http://www.vr-knowledgebase.org/
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+		Hi <%= @recipient %>,
+	</p>
+    <p>
+      Due to innappropriate content the following entry has been rejected.<br/>
+    </p>
+    <p>
+		Title: <%= @entry.title %><br/>
+		Created: <%= @entry.created_at %><br/>
+		Status: <%= @entry.status %><br/>
+    </p>
+	<p>
+		Please contact the site administrator for more information,<br/>
+	</p>
+    <p>
+		VR Knowledgebase<br/>
+		http://www.vr-knowledgebase.org/
+	</p>
+  </body>
+</html>

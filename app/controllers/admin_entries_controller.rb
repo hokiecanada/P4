@@ -10,9 +10,9 @@ class AdminEntriesController < ApplicationController
   
   
   def index
-	@sort_by = params[:sort_by]
-	@entries = Entry.find(:all, :order => @sort_by)
-	@entries = @entries.paginate	:page =>params[:page], :per_page => 20
+	@user = params[:user_id]
+	@entries = Entry.find_all_by_user_id(@user, :order => params[:sort_by])
+	@entries = @entries.paginate	:page =>params[:page], :per_page => 10
 	
     respond_to do |format|
       format.html # index.html.erb
@@ -21,11 +21,23 @@ class AdminEntriesController < ApplicationController
     end
   end
 
-
+  
+  def comments
+	@user = params[:user_id]
+	@comments = Comment.find_all_by_user_id(@user)
+	
+	@comments = @comments.paginate	:page =>params[:page], :per_page => 10
+	
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @entries }
+    end
+  end
+  
+  
   def show
     @entry = Entry.find(params[:id])
-	@entry.viewed += 1
-	@entry.update_attributes(params[:id])
+	@user = User.find(@entry.user_id)
 	
     respond_to do |format|
       format.html # show.html.erb

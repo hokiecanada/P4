@@ -4,22 +4,24 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h1>Hi <%= @recipient %>,</h1>
     <p>
+		Hi <%= @recipient %>,
+    </p>
+	<p>
       This message is to inform you that the following entry has been approved.<br/>
     </p>
     <p>
-		Title: <%= @entry.title %><br>
-		Created: <%= @entry.created_at %><br>
-		Status: <%= @entry.status %><br>
+		Title: <%= @entry.title %><br/>
+		Created: <%= @entry.created_at %><br/>
+		Status: <%= @entry.status %><br/>
     </p>
 	<p>
-		You can log onto your account to view all entries here:<br>
-		<%= @url %><br>
+		For more details please log into your account:<br/>
+		<%= @url %><br/>
 	</p>
     <p>
-		Thank you for your contribution,<br>
-		VR Knowledgebase<br>
+		Thank you for your contribution,<br/>
+		VR Knowledgebase<br/>
 		http://www.vr-knowledgebase.org/
 	</p>
   </body>

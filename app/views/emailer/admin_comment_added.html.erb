@@ -5,23 +5,22 @@
   </head>
   <body>
     <p>
-		Hi Administrator,<br>
+		Hi Administrator,<br/>
 	</p>
     <p>
 		This message is to inform you that a new comment has been submitted to the knowledgebase.<br/>
     </p>
     <p>
-		Entry: <%= @entry.title %>
-		Comment: <%= @comment.comment %>
-		Author: <%= User.find(@comment.user_id).email %>
-		Added: <%= @comment.created_at %>
+		Entry: <%= @entry.title %><br/>
+		Comment: <%= @comment.comment %><br/>
+		Author: <%= User.find(@comment.user_id).email %><br/>
+		Added: <%= @comment.created_at %><br/>
     </p>
 	<p>
-		Admin Sign In: <%= @url %><br>
+		Admin Sign In: <%= @url %><br/>
 	</p>
     <p>
-		Thank you for your contribution,<br>
-		VR Knowledgebase<br>
+		VR Knowledgebase<br/>
 		http://www.vr-knowledgebase.org/
 	</p>
   </body>

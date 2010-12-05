@@ -1,6 +1,6 @@
 class EntriesController < ApplicationController
 
-  before_filter :authenticate_user!, :only => [:new, :create, :edit, :update, :destroy]
+  before_filter :authenticate_user!, :only => [:create, :edit, :update, :destroy]
   before_filter :authenticate_owner, :only => [:edit, :update, :destroy]
   
   def authenticate_owner
@@ -28,7 +28,7 @@ class EntriesController < ApplicationController
 	end
 	@entries = search.results
 	
-	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
+	@entries = @entries.paginate	:page =>params[:page], :per_page => 10
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @entries }
@@ -42,15 +42,15 @@ class EntriesController < ApplicationController
 	@filter = params[:filter]
 	@sort_by = params[:sort_by]
 	
-	if params[:search]
-		@entries = Entry.search(params[:search])
-	elsif @filter
+	if @filter
 		@entries = Entry.tagged_with(params[:filter])
+		@entries = @entries.find(:all, :order => @sort_by)
 	else
 		@entries = Entry.find(:all, :order => @sort_by)
     end
 	
-	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
+	@entries = @entries.paginate	:page => params[:page],
+									:per_page => 5
 	
     respond_to do |format|
       format.html # index.html.erb
@@ -74,14 +74,18 @@ class EntriesController < ApplicationController
 
 
   def new
-    @entry = current_user.entries.build
-	@systems = Array.new[System.find(:all).size]
-	@components = Array.new[Component.find(:all).size]
+    if user_signed_in?
+		@entry = current_user.entries.build
+		@systems = Array.new[System.find(:all).size]
+		@components = Array.new[Component.find(:all).size]
 	
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @entry }
-    end
+		respond_to do |format|
+			format.html # new.html.erb
+			format.xml  { render :xml => @entry }
+		end
+	else
+		redirect_to new_user_session_path, :notice => 'You must be a registered user to create entries. Please sign in or create a new account.'
+	end
   end
 
 

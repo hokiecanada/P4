@@ -1,12 +1,26 @@
-Administrator,
-
-This message is to inform you that the following entry has been updated in the knowledgebase.
-
-Title: <%= link_to @entry.title, @entry %>
-Author: <%= User.find(@entry.user_id).email %>
-Updated: <%= @entry.updated_at %>
-
-<%= link_to 'Admin Sign in', new_admin_session_path %>
-
-VR Knowledgebase
-http://www.vr-knowledgebase.org/
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+		Hi Administrator,<br/>
+	</p>
+    <p>
+		This message is to inform you that a new entry has been updated in the knowledgebase.<br/>
+	</p>
+    <p>
+		Entry: <%= @entry.title %><br/>
+		Author: <%= User.find(@entry.user_id).email %><br/>
+		Updated: <%= @entry.updated_at %><br/>
+    </p>
+	<p>
+		Admin Sign In: <%= @url %><br/>
+	</p>
+    <p>
+		VR Knowledgebase<br/>
+		http://www.vr-knowledgebase.org/
+	</p>
+  </body>
+</html>

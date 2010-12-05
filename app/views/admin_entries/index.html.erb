@@ -1,32 +1,25 @@
-<%= auto_discovery_link_tag(:rss, entries_url(:filter => @filter, :sort_by => @sort_by, :search => @search, :format => 'rss')) %>
+<p>
+	<small><%= link_to 'Admin Dashboard', admin_root_path %> << 
+	User Entries</small>
+</p>
 
 <p>
 	<b>Sort by: </b>
-	<%= link_to 'Title', entries_path(:sort_by => "title ASC", :filter => @filter, :search => @search) %> | 
-	<%= link_to 'Date', entries_path(:sort_by => "year DESC", :filter => @filter, :search => @search) %> | 
-	<%= link_to 'Times Viewed', entries_path(:sort_by => "viewed DESC", :filter => @filter, :search => @search) %>
+	<%= link_to 'Title', admin_entries_path(:sort_by => "title ASC", :user => @user)%> | 
+	<%= link_to 'Date', admin_entries_path(:sort_by => "year DESC", :user => @user) %> | 
+	<%= link_to 'Times Viewed', admin_entries_path(:sort_by => "viewed DESC", :user => @user) %>
 </p>
 
 <% @entries.each do |entry| %>
 <p>
-	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
-	<%= entry.author_list %><br>
-	
-	<%= entry.exp_type %><br>
-	
-	Tags: 
-	<% entry.tag_list_on(:tasks).each do |tag| %>
-		<%= link_to tag, entries_path(:filter => tag) %>, 
-	<% end %>
-	<% entry.tag_list_on(:systems).each do |tag| %>
-		<%= link_to tag, entries_path(:filter => tag) %>, 
-	<% end %>
-	<% entry.tag_list_on(:comps).each_with_index do |tag,i| %>
-		<%= link_to tag, entries_path(:filter => tag) %><% if i < entry.tag_list_on(:comps).size - 1 %>, <% end %>
-	<% end %>
-	<br>
-	Times Viewed: <%= entry.viewed %><br>
+	<big><b><%= link_to entry.title, admin_entry_path(entry) %></b></big> - <%= entry.year %><br>
+	Authors: <%= entry.author_list %><br>
+	Entry type: <%= entry.exp_type %><br>
+	Times viewed: <%= entry.viewed %><br>
 	
 </p>
-<%= will_paginate @entries %>
 <% end %>
+
+<%= will_paginate @entries %>
+
+<%= link_to 'Back to Dashboard', admin_root_path %>

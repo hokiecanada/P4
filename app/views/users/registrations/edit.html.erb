@@ -1,4 +1,9 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<p>
+	<small><%= link_to 'Dashboard', user_root_path %> << 
+	Manage Account</small>
+</p>
+
+<h2>Edit/Cancel Account</h2>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>

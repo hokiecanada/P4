@@ -1,12 +1,26 @@
-Administrator,
-
-This message is to inform you that a new entry has been submitted to the knowledgebase.
-
-Title: <%= link_to @entry.title, @entry %>
-Author: <%= User.find(@entry.user_id).email %>
-Created: <%= @entry.created_at %>
-
-<%= link_to 'Admin Sign in', new_admin_session_path %>
-
-VR Knowledgebase
-http://severe-leaf-80.heroku.com/
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+		Hi Administrator,<br/>
+	</p>
+    <p>
+		This message is to inform you that a new entry has been submitted to the knowledgebase.<br/>
+	</p>
+    <p>
+		Entry: <%= @entry.title %><br/>
+		Author: <%= User.find(@entry.user_id).email %><br/>
+		Added: <%= @entry.created_at %><br/>
+    </p>
+	<p>
+		Admin Sign In: <%= @url %><br/>
+	</p>
+    <p>
+		VR Knowledgebase<br/>
+		http://www.vr-knowledgebase.org/
+	</p>
+  </body>
+</html>

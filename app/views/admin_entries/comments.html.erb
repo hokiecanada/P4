@@ -1,0 +1,17 @@
+<p>
+	<small><%= link_to 'Admin Dashboard', admin_root_path %> << 
+	User Comments</small>
+</p>
+
+<% @comments.each do |comment| %>
+<p>
+	<% entry = Entry.find(comment.entry_id) %>
+	<b><%= link_to entry.title, admin_entry_path(entry) %></b> - <%= entry.year %><br>
+	<b>Comment: </b><%= comment.comment %><br>
+	<b>Created: </b><%= comment.created_at %><br>
+</p>
+<% end %>
+
+<%= will_paginate @comments %>
+
+<%= link_to 'Back to Dashboard', admin_root_path %>

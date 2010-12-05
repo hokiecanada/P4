@@ -1,12 +1,7 @@
 
 <p>
-<%= link_to 'Edit Account', edit_admin_registration_path %>
-</p>
-
-
-<p>
 <h2>Edit entry form:</h2>
-<%= link_to "Edit Entry Form", admin_form_edit_path %>
+<%= link_to "Edit Entry Form", admin_edit_form_path %>
 </p>
 
 <p>
@@ -24,7 +19,7 @@
 <tr>
 	<td><%= link_to entry.title, admin_entry_path(entry) %></td>
 	<td><%= entry.updated_at %></td> 
-	<%= form_for entry, :url => update_status_path(:id => entry, :user_id => entry.user_id) do |f| %>
+	<%= form_for entry, :url => admin_update_status_path(:id => entry, :user_id => entry.user_id) do |f| %>
 		<td><%= f.select :status, options_for_select(["Approved", "Pending", "Rejected"], entry.status) %></td>
 		<td><%= f.submit "Update" %>
 	<% end %><br>
@@ -32,6 +27,7 @@
 	<td><%= link_to "Delete", admin_entry_path(:id => entry, :user_id => entry.user_id), :confirm => 'Are you sure?', :method => :delete %></td>
 </tr>
 <% end %>
+<%= will_paginate @entries, :param_name => 'entries_page' %>
 </table>
 
 </p>
@@ -43,6 +39,7 @@
 	<th>Email</th>
 	<th>Last access</th>
 	<th># of Entries</th>
+	<th># of Comments</th>
 	<th></th>
 	<th></th>
 </tr>
@@ -51,11 +48,11 @@
 	<td><%= user.email %></td>
 	<td><%= user.last_sign_in_at %></td>
 	<td><%= user.entries.size() %></td>
-	<td><%= link_to "User Details", edit_user_registration_path(:user => user) %></td>
-	<td><%= link_to "View Entries", entries_path %></td>
-	<td><%= link_to "Delete User", user_registration_path(:user => user),
-			:confirm => "Are you sure?", :method => :delete %></td>
+	<td><%= user.comments.size() %></td>
+	<td><%= link_to "Entries", admin_entries_path(:user_id => user) %></td>
+	<td><%= link_to "Comments", admin_comments_path(:user_id => user) %></td>
 </tr>
 <% end %>
+<%= will_paginate @users, :param_name => 'users_page' %>
 </table>
 </p>

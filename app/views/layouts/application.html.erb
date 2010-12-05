@@ -35,8 +35,8 @@
 	<div id="content-container">
 		<div id="aside">
 			<p>
-				<% if user_signed_in? %>
-					<%= button_to 'Submit Entry', new_entry_path %>
+				<% if admin_signed_in? %>
+					<%= button_to 'Submit Entry', new_entry_path, :disabled => true %>
 				<% else %>
 					<%= button_to 'Submit Entry', new_entry_path %>
 				<% end %>
