@@ -7,7 +7,7 @@
 <p>
 	<%= form_tag search_basic_path(:search => @search, :search_by => @search_by), :method => 'get' do %>
 		<%= text_field_tag :search, @search, :size => 75 %>
-		<%= select_tag :search_by, options_for_select(["All", "Author", "Title"], @search_by) %>
+		<%= select_tag :search_by, options_for_select(["All", "Author"], @search_by) %>
 		<%= submit_tag "Search", :name => nil %>
 	<% end %>
 	<%= link_to "Advanced Search", search_advanced_path(@search, @search_by) %>
