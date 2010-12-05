@@ -1,5 +1,5 @@
 class Entry < ActiveRecord::Base
-  acts_as_tsearch 	:fields => [:title,:authors_string]
+  acts_as_tsearch 	:fields => ["title","authors_string"]
 
   belongs_to :user
   
