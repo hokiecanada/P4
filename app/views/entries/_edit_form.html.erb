@@ -1,3 +1,5 @@
+
+
 <%= form_for @entry do |f| %>
 	<input type="hidden" name="systems[]"> 
 	<input type="hidden" name="components[]"> 
@@ -114,11 +116,10 @@
   </div>
   <div class="field">
     <%= f.label "How would you characterize this experiment?" %><br>
-	<%= f.radio_button :exp_type, "Controlled experiment", :onclick => "Element.show('controlled'); Element.hide('practical');" %>A controlled experiment varying individual components of immersion independently<br>
-	<%= f.radio_button :exp_type, "Practical comparison", :onclick => "Element.hide('controlled'); Element.show('practical');" %>A practical comparison of multiple real-world VR sysytems<br>
+	<%= f.radio_button :exp_type, "Controlled experiment", :onchange => "Element.toggle('controlled'); Element.toggle('practical');" %>A controlled experiment varying individual components of immersion independently<br>
+	<%= f.radio_button :exp_type, "Practical comparison", :onchange => "Element.toggle('controlled'); Element.toggle('practical');" %>A practical comparison of multiple real-world VR sysytems<br>
   </div>
-
-  <div id="controlled">
+  <div id="controlled" <% if @entry.exp_type == "Practical comparison" %>style="display:none"<% end %>>
 	<div class="field">
 		<%= f.label 'Categories of VR displays used in the experiment:' %><br />
 		<% System.find(:all).each do |s| %>
@@ -156,7 +157,7 @@
 		<%= f.text_area :constants, :cols => 75, :rows => 6 %>
 	</div>
   </div>
-  <div class="field" id="practical">
+  <div class="field" id="practical" <% if @entry.exp_type == "Controlled experiment" %>style="display:none"<% end %>>
     <div class="field">
 		<%= f.label 'Categories of VR displays used in the experiment:' %><br />
 		<% System.find(:all).each do |s| %>
