@@ -30,14 +30,13 @@ class SearchController < ApplicationController
   
   def basic
 	@search = params[:search]
-	@search_by = "Author"
 	
 	if @search_by == "All"
-		@entries = Entry.search(@search)
+		@entries = Entry.find_by_tsearch(@search, nil, { :vector => "all" } )
 	elsif @search_by == "Title"
-		@entries = Entry.search_title(@search)
+		@entries = Entry.find_by_tsearch(@search, nil, {:vector => "title"})
 	elsif @search_by == "Author"
-		@entries = Entry.search_author(@search)
+		@entries = Entry.find_by_tsearch(@search, nil, {:vector => "author"})
 	end
 	
 	@entries = @entries.paginate	:page =>params[:page], :per_page => 5

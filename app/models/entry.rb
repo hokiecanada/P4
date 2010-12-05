@@ -39,6 +39,9 @@ class Entry < ActiveRecord::Base
   acts_as_taggable_on :systems
   acts_as_taggable_on :comps
   
+  acts_as_tsearch :all => {:fields => [:title,:authors_string,:findings]}
+  acts_as_tsearch :title => {:fields => [:title]}
+  acts_as_tsearch :author => {:fields => [:authors_string]}
   
   validates :title, 				:presence => true
   #validates :paper_url, 			:presence => true
