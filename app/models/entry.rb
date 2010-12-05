@@ -1,6 +1,35 @@
 class Entry < ActiveRecord::Base
-  acts_as_tsearch 	:vector => {:fields => ["title","authors_string"],
-					:locale => 'pg_catalog.english'}
+  index do
+	title			'A'
+	authors_string	'A'
+	tags_string		'A'
+	findings		'A'
+	summary			'A'
+	
+    task_desc		'B'
+    interface_desc	'B'
+    env_desc		'B'
+    systems_tech	'B'
+    systems_desc	'B'
+    comps_desc		'B'
+    variables_desc	'B'
+    constants		'B'
+    specificity
+    issues			'B'
+    other			'B'
+	
+	env_dim			'C'
+    env_scale		'C'
+    env_density		'C'
+    env_realism		'C'
+	part_gender		'C'
+    part_background	'C'
+    part_other		'C'
+    exp_type		'C'
+  end
+  
+  #index('title') { title }
+  #index('author') { authors_string }
 
   belongs_to :user
   
@@ -10,8 +39,7 @@ class Entry < ActiveRecord::Base
   acts_as_taggable_on :systems
   acts_as_taggable_on :comps
   
-
-
+  
   
   validates :title, 				:presence => true
   #validates :paper_url, 			:presence => true
