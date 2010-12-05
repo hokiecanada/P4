@@ -1,5 +1,6 @@
 class Entry < ActiveRecord::Base
-  acts_as_tsearch 	:fields => ["title","authors_string"]
+  acts_as_tsearch 	:vector => {:fields => ["title","authors_string"],
+					:locale => 'pg_catalog.english'}
 
   belongs_to :user
   
