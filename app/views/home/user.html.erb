@@ -32,7 +32,7 @@
 <% @favorites.each do |fav| %>
 	<% entry = Entry.find(fav.entry_id) %>
 	<%= link_to entry.title, entry_path(entry) %>
-	<small><%= link_to 'Delete', favorite_path(fav), :confirm => 'Are you sure?', :method => :delete %></small><br>
+	<small><%= link_to 'Delete', entry_favorite_path(entry,fav), :confirm => 'Are you sure?', :method => :delete %></small><br>
 <% end %>
 <%= will_paginate @favorites, :param_name => 'favorites_page'  %>
 </p>

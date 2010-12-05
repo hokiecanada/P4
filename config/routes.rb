@@ -10,7 +10,7 @@ P4::Application.routes.draw do
 		resources :comments, :only => [:create, :destroy]
 		resources :favorites, :only => [:create, :destroy]
 	end
-	resources :favorites, :only => [:create, :destroy]
+	#resources :favorites, :only => [:create, :destroy]
   end
   
   devise_for :admins do
@@ -29,6 +29,9 @@ P4::Application.routes.draw do
   match "/entries/new" => "entries#new"
   match "/entries/:id/edit" => "entries#edit"
   match "/entries.rss" => "entries#rss"
+  
+  ## FAVORITE ROUTES
+  match "entry_favorites" => "favorites#create"
   
   ## SEARCH ROUTES
   match "search" => "entries#search"

@@ -1,6 +1,11 @@
 <%= auto_discovery_link_tag(:rss, entry_url(@entry, :format => 'rss')) %>
 <p id="notice"><%= notice %></p>
 
+<p>
+	<small><%= link_to 'Dashboard', user_root_path %> << 
+	New Entry</small>
+</p>
+
 <% if User.find(@entry.user_id) == current_user %>
 	<%= button_to 'Edit Entry', edit_entry_path(@entry) %>
 <% elsif user_signed_in? %>
@@ -8,6 +13,8 @@
 		<%= f.hidden_field :user_id, :value => current_user.id %>
 		<%= f.submit 'Add to Favorites' %>
 	<% end %>
+<% else %>
+	<%= button_to 'Add to Favorites', entry_favorites_path(@entry), :method => :create %>
 <% end %>
 
 
