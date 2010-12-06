@@ -6,14 +6,6 @@ class SearchController < ApplicationController
   def tag_cloud
 	@tags = (Entry.tag_counts_on(:authors) + Entry.tag_counts_on(:comps) + Entry.tag_counts_on(:systems) + Entry.tag_counts_on(:tasks)).sort_by {rand}
   end
-  
-  
-  def index
-	
-	respond_to do |format|
-		format.html # index.html.erb
-	end
-  end
 
   
   def tag
@@ -23,19 +15,24 @@ class SearchController < ApplicationController
 	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
 	
 	respond_to do |format|
-      format.html # show.html.erb
+      format.html # tag.html.erb
     end
   end  
   
   
   def basic
-	@search = params[:search]
-	@search_by = params[:search_by]
+	@keyword = params[:keyword]
 	
-	if @search_by == "All"
-		@entries = Entry.search(@search)
-	elsif @search_by == "Author"
-		@entries = Entry.tagged_with(@search, :on => :authors)
+	if !@keyword.nil? && @keyword != "" 
+		@entries = Entry.find_all_by_status("Approved") && Entry.search(@keyword)
+	else
+		@entries = nil
+	end
+	
+	if @entries.nil?
+		@found = "No results found."
+	else
+		@found = @entries.size.to_s + " results found."
 	end
 	
 	if !@entries.nil?
@@ -55,7 +52,7 @@ class SearchController < ApplicationController
 		@year_start = nil
 		@year_end = nil
 	else
-		@year_start = Date.civil(params[:range][:"year(1i)"].to_i,1,1)#params[:range][:"year(2i)"].to_i,params[:range][:"year(3i)"].to_i)
+		@year_start = Date.civil(params[:range][:"year(1i)"].to_i,1,1)
 		year_end = Date.civil(params[:range][:"year(1i)"].to_i,12,31)
 	end
 	
@@ -72,7 +69,6 @@ class SearchController < ApplicationController
 	started = false
 	
 	if @author != "" && !@author.nil?
-		#@entries = @entries && Entry.tagged_with(@author, :on => :author)
 		@entries = @entries && Entry.search_author(@author)
 		started = true
 	end
@@ -129,7 +125,7 @@ class SearchController < ApplicationController
 	end
 	
 	respond_to do |format|
-      format.html # basic.html.erb
+      format.html # advanced.html.erb
     end
   end
   

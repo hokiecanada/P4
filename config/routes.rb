@@ -24,7 +24,6 @@ P4::Application.routes.draw do
   match "user" 		=> "home#user"
 
   ## ENTRY ROUTES
-  #match "/entries/:id"		=> "entries#show"
   match "/entries/new" 		=> "entries#new"
   match "/entries/:id/edit" => "entries#edit"
   match "/entries.rss" 		=> "entries#rss"
@@ -33,9 +32,8 @@ P4::Application.routes.draw do
   match "entry_favorites" 	=> "favorites#create"
   
   ## SEARCH ROUTES
-  match "search" 			=> "search#index"
+  match "search" 			=> "search#basic"
   match "search_tag" 		=> "search#tag"
-  match "search_basic" 		=> "search#basic"
   match "search_advanced" 	=> "search#advanced"
 
   ## ADMIN ROUTES
