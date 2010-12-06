@@ -114,79 +114,82 @@
     <%= f.label "Participants - Other information about the participants in this experiment:" %><br />
     <%= f.text_area :part_other, :cols => 75, :rows => 6 %>
   </div>
+
+  
+  
+  
+  
   <div class="field">
     <%= f.label "How would you characterize this experiment?" %><br>
-	<%= f.radio_button :exp_type, "Controlled experiment", :onchange => "Element.toggle('controlled'); Element.toggle('practical');" %>A controlled experiment varying individual components of immersion independently<br>
-	<%= f.radio_button :exp_type, "Practical comparison", :onchange => "Element.toggle('controlled'); Element.toggle('practical');" %>A practical comparison of multiple real-world VR sysytems<br>
+	<%= f.radio_button :exp_type, "Controlled experiment", :onclick => "Element.show('c1'); Element.show('c2'); Element.show('c3'); Element.hide('p1'); Element.hide('p2'); Element.hide('p3')" %>A controlled experiment varying individual components of immersion independently<br>
+	<%= f.radio_button :exp_type, "Practical comparison", :onclick => "Element.show('p1'); Element.show('p2'); Element.show('p3'); Element.hide('c1'); Element.hide('c2'); Element.hide('c3')" %>A practical comparison of multiple real-world VR sysytems<br>
   </div>
-  <div id="controlled" <% if @entry.exp_type == "Practical comparison" %>style="display:none"<% end %>>
-	<div class="field">
+  
+
+	<div id="p1">
 		<%= f.label 'Categories of VR displays used in the experiment:' %><br />
+	</div>
+	<div id="c1" style="display:none">
+		<%= f.label 'Categories of VR displays compared in the experiment:' %><br />
+	</div>
+	<div>
 		<% System.find(:all).each do |s| %>
 			<% if @entry.tag_list_on(:systems).include?(s.tag) %>
 				<%= check_box_tag "systems[]", s.tag, true %><%= s.tag %><br>
 			<% else %>
 				<%= check_box_tag "systems[]", s.tag, false %><%= s.tag %><br>
 			<% end %>
-		<% end %>
+		<% end %><br>
 	</div>
+	
 	<div class="field">
 		<%= f.label 'Provide as much detail as you can on the technical specifications of the system(s) used in the experiment (dislays, input devices, tracking systems, computers, and anything else about the hardware/software described in the paper):' %><br />
 		<%= f.text_area :systems_tech, :cols => 75, :rows => 6 %>
 	</div>
-	<div>
+	
+	
+	<div id="p2" style="display:none">
+		<div class="field">
+			<%= f.label 'Describe each of the systems in as much detail as possible in terms of the components of immersion:' %><br />
+			<%= f.text_area :systems_desc, :cols => 75, :rows => 6 %>
+		</div>
+	</div>
+	
+
+	<div id="c3">
 		<%= f.label 'What components of immersion were varied in this experiment?' %><br />
-		<% Component.find(:all).each do |c| %>
-			<% if @entry.tag_list_on(:comps).include?(c.tag) %>
-				<%= check_box_tag "components[]", c.tag, true %><%= c.tag %><br>
-			<% else %>
-				<%= check_box_tag "components[]", c.tag, false %><%= c.tag %><br>
-			<% end %>
-		<% end %>
 	</div>
-	<div class="field">
-		<%= f.label 'Describe the different levels of each independent component you identified above:' %><br />
-		<%= f.text_area :comps_desc, :cols => 75, :rows => 6 %>
-	</div>
-	<div class="field">
-		<%= f.label 'Describe any additional independent variables (not components of immersion) and their levels:' %><br />
-		<%= f.text_area :variables_desc, :cols => 75, :rows => 6 %>
-	</div>
-	<div class="field">
-		<%= f.label 'Describe other factors that were held constant:' %><br />
-		<%= f.text_area :constants, :cols => 75, :rows => 6 %>
-	</div>
-  </div>
-  <div class="field" id="practical" <% if @entry.exp_type == "Controlled experiment" %>style="display:none"<% end %>>
-    <div class="field">
-		<%= f.label 'Categories of VR displays used in the experiment:' %><br />
-		<% System.find(:all).each do |s| %>
-			<% if @entry.tag_list_on(:systems).include?(s.tag) %>
-				<%= check_box_tag "systems[]", s.tag, true %><%= s.tag %><br>
-			<% else %>
-				<%= check_box_tag "systems[]", s.tag, false %><%= s.tag %><br>
-			<% end %>
-		<% end %>
-	</div>
-	<div class="field">
-		<%= f.label 'Provide as much detail as you can on the technical specifications of the system(s) used in the experiment (dislays, input devices, tracking systems, computers, and anything else about the hardware/software described in the paper):' %><br />
-		<%= f.text_area :systems_tech, :cols => 75, :rows => 6 %>
+	<div id="p3" style="display:none">
+		<%= f.label 'What components of immersion were involved in this experiment?' %><br />
 	</div>
 	<div>
-		<%= f.label 'What components of immersion were involved in this experiment?' %><br />
 		<% Component.find(:all).each do |c| %>
 			<% if @entry.tag_list_on(:comps).include?(c.tag) %>
 				<%= check_box_tag "components[]", c.tag, true %><%= c.tag %><br>
 			<% else %>
 				<%= check_box_tag "components[]", c.tag, false %><%= c.tag %><br>
 			<% end %>
-		<% end %>
+		<% end %><br>
 	</div>
-	<div class="field">
-		<%= f.label 'Describe each of the systems in as much detail as possible in terms of the components of immersion:' %><br />
-		<%= f.text_area :systems_desc, :cols => 75, :rows => 6 %>
-	</div>
-  </div>
+	
+	
+	<div class="field" id="c2">
+		<div class="field">
+			<%= f.label 'Describe the different levels of each independent components you identified above:' %><br />
+			<%= f.text_area :comps_desc, :cols => 75, :rows => 6 %>
+		</div>
+		<div class="field">
+			<%= f.label 'Describe any additional independent variables (not components of immersion) and their levels:' %><br />
+			<%= f.text_area :variables_desc, :cols => 75, :rows => 6 %>
+		</div>
+		<div class="field">
+			<%= f.label 'Describe other factors that were held constant:' %><br />
+			<%= f.text_area :constants, :cols => 75, :rows => 6 %>
+		</div>
+	</div>  
+
+
+
   <div class="field">
     <%= f.label "Describe the specific findings of the experiment that are related to the level of immersion.  Please put each finding in a separate paragraph.  Be sure to state, for each finding, whether a higher level of immersion had a positive, neutral, or negative effect." %><br />
     <%= f.text_area :findings, :cols => 75, :rows => 12 %>

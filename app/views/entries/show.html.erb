@@ -21,7 +21,7 @@
 
 
 <p>
-  Tags: <%= @entry.tags_string %><br>
+
   <b>Paper title: </b><%= @entry.title %><br>
 			
 
@@ -31,6 +31,17 @@
 	<% end %><br>
   <b>Citation: </b><%= @entry.citation %><br> 
   <b>URL: </b><%= link_to @entry.paper_url %><br>
+
+    <b>Tags: </b>
+	<% @entry.tag_list_on(:tasks).each do |tag| %>
+		<%= link_to tag, entries_path(:filter => tag) %>, 
+	<% end %>
+	<% @entry.tag_list_on(:systems).each do |tag| %>
+		<%= link_to tag, entries_path(:filter => tag) %>, 
+	<% end %>
+	<% @entry.tag_list_on(:comps).each_with_index do |tag,i| %>
+		<%= link_to tag, entries_path(:filter => tag) %><% if i < @entry.tag_list_on(:comps).size - 1 %>, <% end %>
+	<% end %>
 </p>
 
 <p>
@@ -84,7 +95,7 @@
 
 <% if User.find(@entry.user_id) == current_user %>
 	<%= link_to 'Edit Entry', edit_entry_path(@entry) %> | 
-	<%= link_to 'Delete Entry', entry_path(@entry), :confirm => 'Are you sure?', :method => :delete %>
+	<%= link_to 'Delete Entry', entry_path(@entry), :confirm => 'Are you sure?', :method => :delete %> | 
 	<%= link_to 'Back', user_root_path %>
 <% else %>
 	<%= link_to 'Back', entries_path %>

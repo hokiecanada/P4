@@ -19,10 +19,13 @@
 <p>
 <h2>Entries I have commented on:</h2>
 <% @comments.each do |comment| %>
+<p>
 	<% entry = Entry.find(comment.entry_id) %>
 	<%= link_to entry.title, entry_path(entry) %><br>
-	Comment: <%= comment.comment %><br>
+	Comment: <i><%= comment.comment %><br>
+	<%= comment.created_at %></i>
 	<small><%= link_to 'Delete', entry_comment_path(entry, comment), :confirm => 'Are you sure?', :method => :delete %></small><br>
+</p>
 <% end %>
 <%= will_paginate @comments, :param_name => 'comments_page'  %>
 
