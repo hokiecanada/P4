@@ -42,10 +42,8 @@ class Entry < ActiveRecord::Base
   
   validates :title, 				:presence => true
   validates :paper_url, 			:presence => true
-  validates :authors, 				:presence => true
   validates :year,					:presence => true
   validates :citation, 				:presence => true
-  validates :task, 					:presence => true
   validates :env_dim, 				:presence => true
   validates :env_scale, 			:presence => true
   validates :env_density, 			:presence => true
