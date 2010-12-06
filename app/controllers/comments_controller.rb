@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
 	
 		Emailer.comment_added(User.find(@entry.user_id).email, @entry, @comment).deliver
 		Emailer.admin_comment_added("cstinson@vt.edu", @entry, @comment).deliver
-		redirect_to entry_path(@entry)
+		redirect_to entry_path(@entry), :notice => 'Comment added successfully.'
 	else
 		redirect_to new_user_session_path, :notice => 'You must be signed in to comment on entries. Please sign in or create a new account.'
 	end		
@@ -23,11 +23,11 @@ class CommentsController < ApplicationController
 
   
   def destroy
+	@comment = @entry.comments.find(params[:id])
     if @comment.user_id == current_user.id
-		@comment = @entry.comments.find(params[:id])
 		@comment.destroy
 	
-		redirect_to entry_path(@entry)
+		redirect_to entry_path(@entry), :notice => 'Comment deleted successfully.'
 	else
 		redirect_to entry_path(@entry), :notice => 'You must be the owner to delete this comment.'
 	end
