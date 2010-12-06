@@ -13,6 +13,7 @@
 <% elsif user_signed_in? %>
 	<% form_for [@entry, current_user.favorites.build] do |f| %>
 		<%= f.hidden_field :user_id, :value => current_user.id %>
+		<%= f.hidden_field :entry_id, :value => @entry.id %>
 		<%= f.submit 'Add to Favorites' %>
 	<% end %>
 <% else %>

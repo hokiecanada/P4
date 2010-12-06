@@ -24,6 +24,7 @@ P4::Application.routes.draw do
   match "user" 		=> "home#user"
 
   ## ENTRY ROUTES
+  #match "/entries/:id"		=> "entries#show"
   match "/entries/new" 		=> "entries#new"
   match "/entries/:id/edit" => "entries#edit"
   match "/entries.rss" 		=> "entries#rss"
