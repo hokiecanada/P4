@@ -43,6 +43,7 @@
 			<%= form_tag search_path, :method => 'get' do %>
 				<%= text_field_tag :keyword, @keyword, :size => 40 %>
 				<%= submit_tag "Search", :name => nil %>
+				<%= link_to "Advanced Search", search_advanced_path(@keyword) %>
 			<% end %>
 		</div>
 	</div>
