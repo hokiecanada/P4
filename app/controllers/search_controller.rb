@@ -1,9 +1,20 @@
 class SearchController < ApplicationController
 
-  
+
   def tag
-	@entries = Entry.tagged_with(params[:tag])
-	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
+	@entries = Entry.find_all_by_status("Approved") & Entry.tagged_with(params[:tag])
+	
+	if @entries.nil?
+		@found = "0 results found"
+	elsif @entries.size == 1
+		@found = "1 result found"
+	else
+		@found = @entries.size.to_s + " results found."
+	end
+
+	if !@entries.nil?
+		@entries = @entries.paginate	:page =>params[:page], :per_page => 5
+	end
 	
 	respond_to do |format|
       format.html # tag.html.erb
@@ -15,18 +26,22 @@ class SearchController < ApplicationController
 	@keyword = params[:keyword]
 	
 	if !@keyword.nil? && @keyword != "" 
-		@entries = Entry.find_all_by_status("Approved") && Entry.search(@keyword)
+		@entries = Entry.find_all_by_status("Approved") & Entry.search(@keyword)
 	else
 		@entries = nil
 	end
 	
-	if @entries.size == 1
+	if @entries.nil?
+		@found = "0 results found"
+	elsif @entries.size == 1
 		@found = "1 result found"
 	else
 		@found = @entries.size.to_s + " results found."
 	end
 
-	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
+	if !@entries.nil?
+		@entries = @entries.paginate	:page =>params[:page], :per_page => 5
+	end
 	
 	respond_to do |format|
       format.html # basic.html.erb
@@ -58,62 +73,62 @@ class SearchController < ApplicationController
 	started = false
 	
 	if @author != "" && !@author.nil?
-		@entries = @entries && Entry.search_author(@author)
+		@entries = @entries & Entry.search_author(@author)
 		started = true
 	end
 	if !@keyword.nil? && @keyword != "" 
-		@entries = @entries && Entry.search(@keyword)
+		@entries = @entries & Entry.search(@keyword)
 		started = true
 	end
 	if !@year_start.nil?
-		@entries = @entries && Entry.find(:all, :conditions => ["year >= ? and year <= ?", @year_start, year_end] )
+		@entries = @entries & Entry.find(:all, :conditions => ["year >= ? and year <= ?", @year_start, year_end] )
 		started = true
 	end
 	if @exp_type != "n/a" && !@exp_type.nil?
-		@entries = @entries && Entry.find_all_by_exp_type(@exp_type)
+		@entries = @entries & Entry.find_all_by_exp_type(@exp_type)
 		started = true
 	end
 	if  !@env_dim.nil? && @env_dim != "n/a"
-		@entries = @entries && Entry.find_all_by_env_dim(@env_dim)
+		@entries = @entries & Entry.find_all_by_env_dim(@env_dim)
 		started = true
 	end
 	if @env_scale != "n/a" && !@env_scale.nil?
-		@entries = @entries && Entry.find_all_by_env_scale(@env_scale)
+		@entries = @entries & Entry.find_all_by_env_scale(@env_scale)
 		started = true
 	end
 	if @env_density != "n/a" && !@env_density.nil?
-		@entries = @entries && Entry.find_all_by_env_density(@env_density)
+		@entries = @entries & Entry.find_all_by_env_density(@env_density)
 		started = true
 	end
 	if @env_realism != "n/a" && !@env_realism.nil?
-		@entries = @entries && Entry.find_all_by_env_realism(@env_realism)
+		@entries = @entries & Entry.find_all_by_env_realism(@env_realism)
 		started = true
 	end
 	if @part_num != "n/a" && !@part_num.nil?
-		@entries = @entries && Entry.find_all_by_part_num(@part_num)
+		@entries = @entries & Entry.find_all_by_part_num(@part_num)
 		started = true
 	end
 	if @part_gender != "n/a" && !@part_gender.nil?
-		@entries = @entries && Entry.find_all_by_part_gender(@part_gender)
+		@entries = @entries & Entry.find_all_by_part_gender(@part_gender)
 		started = true
 	end
 	if @specificity != "n/a" && !@specificity.nil?
-		@entries = @entries && Entry.find_all_by_specificity(@specificity)
+		@entries = @entries & Entry.find_all_by_specificity(@specificity)
 		started = true
 	end
 	
-	if !started
+	if !started || @entries.nil?
 		@entries = nil
 		@found = "0 results found."
 	else
+		@entries = @entries.paginate	:page => params[:page], :per_page => 5
+		
 		if @entries.size == 1
 			@found = "1 result found"
 		else
 			@found = @entries.size.to_s + " results found."
 		end
 	end
-	
-	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
 	
 	respond_to do |format|
       format.html # advanced.html.erb

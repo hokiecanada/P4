@@ -1,11 +1,19 @@
 
-<p id="notice"><%= notice %></p>
+	<ul class="user">
+		<li class="user"><span class="active">My Contributions</span></li>
+		<li class="user"><a class="user" href="#comments">My Comments</a></li>
+		<li class="user"<a class="user" href="#favs">My Favorites</a></li>
+	</ul>
 
+
+<p id="notice"><%= notice %></p>
+<div id="content_user">
 <p>
 <%= link_to 'Edit/Delete Account', edit_user_registration_path %>
 </p>
 
 
+<div id="entries" onclick="Effect.toggle('entry_content', 'blind', { duration:1} )" >
 	<div id="title">
 		<h2>My contributions:</h2>
 	</div>
@@ -20,10 +28,10 @@
 		<% end %>
 		<%= will_paginate @entries, :param_name => 'entries_page' %>
 	</div>
+</div>
 
 
-
-
+<div id="comment_section" onclick="Effect.toggle('comment_content', 'blind', { duration:1} )" >
 	<div id="title">
 		<h2>Entries I have commented on:</h2>
 	</div>
@@ -39,7 +47,7 @@
 		<% end %>
 	<%= will_paginate @comments, :param_name => 'comments_page'  %>
 	</div>
-
+</div>
 
 <p>
 <h2>My favorites:</h2>
@@ -50,3 +58,4 @@
 <% end %>
 <%= will_paginate @favorites, :param_name => 'favorites_page'  %>
 </p>
+</div>

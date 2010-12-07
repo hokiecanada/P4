@@ -1,20 +1,39 @@
+<%= auto_discovery_link_tag(:rss, entries_url(:format => 'rss')) %>
 <p id="notice"><%= notice %></p>
 
-<h1>Welcome to the site!</h1>
-
-<p>
-	Blah, blah, blah.
+<p class="welcomemessage">
+<b>Immersion is defined as the fidelity of a system to real sensory inputs.</b><br />
+Many experiments have been performed evaluating the many and varied aspects of immersion.  This database is intended to serve a repository for the knowledge gained from these experiments.
 </p>
 
-<p>
-	Are you new to the site?  Want to know how/why to use it?  Check out our intro section:<br>
-	<%= link_to "Intro", intro_path %>
-</p>
+<div id="recent">
+	<h2>Recent additions</h2>
+	<% @recent_entries.each do |entry| %>
+		<div style="clear:both;">
+			<div style="float:left; display:inline; border:solid gray; margin:5px; padding:5px">
+				<center><small>Viewed:</small><br />
+				<big><%= entry.viewed %></big></center>
+			</div>
+			<div style="float:left; display:inline; margin:5px; padding:5px">
+				<%= link_to entry.title, entry_path(entry) %><br>
+				<i><%= entry.exp_type %>.</i> By 
+				<% entry.tag_list_on(:authors).each_with_index do |tag,i| %>
+					<%= link_to tag, search_tag_path(tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
+				<% end %><br>
+				<i>	<% entry.tag_list_on(:tasks).each do |tag| %>
+					<%= link_to tag, search_tag_path(tag) %>, 
+				<% end %>
+				<% entry.tag_list_on(:systems).each do |tag| %>
+					<%= link_to tag, search_tag_path(tag) %>, 
+				<% end %>
+				<% entry.tag_list_on(:comps).each_with_index do |tag,i| %>
+					<%= link_to tag, search_tag_path(tag) %><% if i < entry.tag_list_on(:comps).size - 1 %>, <% end %>
+				<% end %></i><br>
+			</div>
+		</div>
+	<% end %>
+	<% will_paginate @recent_entries %>
+</div>
 
-<p>
-	Aleady know what you're doing?<br>
-	<%= link_to "Add new entry", new_entry_path %>
-	<%= link_to "Search the knowledgebase", search_path %>
-</p>
 
 

@@ -1,0 +1,32 @@
+<p>
+	<small><%= link_to 'Admin Dashboard', admin_root_path %> << 
+	Email Form</small>
+</p>
+
+
+<%= form_tag email_send_path do |f| %>
+
+	<div class="field">
+		<%= text_field_tag :recipient, @recipient %>
+	</div>
+	
+	<div class="field">
+		<%= text_field_tag :sender, @sender %>
+	</div>
+	
+	<div class="field">
+		<%= text_field_tag :subject, @subject %>
+	</div>
+	
+	<div class="field">
+		<%= text_field_tag :body, @body %>
+	</div>
+	
+	
+	<div class="actions">
+		<%= submit_tag "Send Message" %>
+	</div>
+<% end %> 
+
+
+<%= link_to 'Back to Dashboard', admin_root_path %>

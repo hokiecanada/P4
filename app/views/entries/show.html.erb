@@ -28,20 +28,20 @@
 
   <b>Authors: </b>
 	<% @entry.tag_list_on(:authors).each_with_index do |tag,i| %>
-		<%= link_to tag, entries_path(:filter => tag) %><% if i < @entry.tag_list_on(:authors).size - 1 %>, <% end %>
+		<%= link_to tag, search_tag_path(:tag => tag) %><% if i < @entry.tag_list_on(:authors).size - 1 %>, <% end %>
 	<% end %><br>
   <b>Citation: </b><%= @entry.citation %><br> 
   <b>URL: </b><%= link_to @entry.paper_url %><br>
 
     <b>Tags: </b>
 	<% @entry.tag_list_on(:tasks).each do |tag| %>
-		<%= link_to tag, entries_path(:filter => tag) %>, 
+		<%= link_to tag, search_tag_path(:tag => tag) %>, 
 	<% end %>
 	<% @entry.tag_list_on(:systems).each do |tag| %>
-		<%= link_to tag, entries_path(:filter => tag) %>, 
+		<%= link_to tag, search_tag_path(:tag => tag) %>, 
 	<% end %>
 	<% @entry.tag_list_on(:comps).each_with_index do |tag,i| %>
-		<%= link_to tag, entries_path(:filter => tag) %><% if i < @entry.tag_list_on(:comps).size - 1 %>, <% end %>
+		<%= link_to tag, search_tag_path(:tag => tag) %><% if i < @entry.tag_list_on(:comps).size - 1 %>, <% end %>
 	<% end %>
 </p>
 

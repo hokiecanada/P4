@@ -38,11 +38,12 @@ P4::Application.routes.draw do
 
   ## ADMIN ROUTES
   match "admin_edit_entry" 			=> "admin_entries#edit"
-  match "admin_entries/:id/edit"	=> "admin_entires#edit"
+  match "admin_entries/:id/edit"	=> "admin_entries#edit"
   match "admin_comments" 			=> "admin_entries#comments"
   match "admin_edit_form" 			=> "admin_form#edit"
   match "admin_update_status" 		=> "admin_entries#update_status"
-  
+  match "email_form"				=> "home#email_form"
+  match "email_send"				=> "home#email_send"
   
   namespace :user do
 	root :to => "home#user",  :controller => "home"

@@ -4,7 +4,7 @@
 	<%= link_to 'User Details', admin_entries_path(:user => @user) %> << 
 	Entry Details</small>
 </p>
-Tags: <%= @entry.tags_string %><br>
+
 <%= button_to 'Edit Entry', edit_admin_entry_path(:id => @entry, :user_id => @entry.user_id) %>
 
 <p>

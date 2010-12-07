@@ -8,50 +8,62 @@
 </head>
 
 <body>
-<div id="top">
+
+<div id="topbar">
 	<div id="sign_in">
-		<% if user_signed_in? %>
-			Signed in as <%= current_user.email %>. Not you?
-			<%= link_to "Sign out", destroy_user_session_path %> |
-			<%= link_to "My Account Home", user_root_path %>
-		<% elsif admin_signed_in? %>
-			Signed in as <%= current_admin.email %>. Not you?
-			<%= link_to "Sign out", destroy_admin_session_path %>
-		<% else %>
-			<%= link_to "Sign up", new_user_registration_path %> or 
-			<%= link_to "sign in", new_user_session_path %> | 
-			<%= link_to "Admin sign-in", new_admin_session_path %>
-		<% end %>
+			<% if user_signed_in? %>
+				Signed in as <%= current_user.email %>. Not you?
+				<%= link_to "Sign out", destroy_user_session_path %>.
+				<%= link_to "My Account Home", user_root_path %>
+			<% elsif admin_signed_in? %>
+				Signed in as <%= current_admin.email %>. Not you?
+				<%= link_to "Sign out", destroy_admin_session_path %>
+			<% else %>
+				<%= link_to "Sign up", new_user_registration_path %> or 
+				<%= link_to "Sign in", new_user_session_path %> | 
+				<%= link_to "Admin sign-in", new_admin_session_path , :class => "adminsignin" %>
+			<% end %>
 	</div>
 	
-	<div id="search">
-		<%= form_tag search_path, :method => 'get' do %>
-			<%= text_field_tag :keyword, @keyword, :size => 75 %>
-			<%= submit_tag "Search", :name => nil %>
-		<% end %>
+	<img src="/images/ucsb_logo.png" alt="UCSB logo" class="logoimage" id="ucsb_logo" />
+	<img src="/images/vt_logo.png" alt="Virginia tech logo" class="logoimage" id="vt_logo" />
+	
+	<div id="header">
+		<h1>
+			<a href="/" id="sitelogo">
+			  <span class="hidden">VR Knowledgebase</span>
+			</a>
+		</h1>
 	</div>
 </div>
 
-<div id="container">
-	<div id="header">
-		<h1>
-			VR Knowledgebase
-		</h1>
+<div id="subheader">
+	<div id="subheader_internal">
+		<div id="quicksearch">
+			<%= form_tag search_path, :method => 'get' do %>
+				<%= text_field_tag :keyword, @keyword, :size => 40 %>
+				<%= submit_tag "Search", :name => nil %>
+			<% end %>
+		</div>
 	</div>
-	
-	<div id="navigation">
-		<ul>
+</div>
 
-		</ul>
-	</div>
-	
-	<div id="content-container">
+<div id="navigation">
+	<ul>
+
+	</ul>
+</div>
+
+<div id="contentarea">
+	<div id="content_container">
 		<div id="aside">
 			<p>
 				<% if admin_signed_in? %>
-					<%= button_to 'Submit Entry', new_entry_path, :disabled => true %>
+					Cannot add new entries as admin.
 				<% else %>
-					<%= button_to 'Submit Entry', new_entry_path %>
+					<%= link_to new_entry_path, :class => "new_entry_button", :method => :create do %>
+						<span>Add a new entry</span>
+					<% end %>
 				<% end %>
 			</p>
 			<p>
@@ -59,41 +71,35 @@
 				<p>
 					Components of Immersion:
 					<ul><% @master_components.each do |c| %>
-						<li><%= link_to c.tag, search_tag_path(:tag => c.tag) %> (<%= Entry.tagged_with(c.tag).size %>)</li>
+						<li><%= link_to c.tag, search_tag_path(:tag => c.tag) %> (<%= (@approved_entries & Entry.tagged_with(c.tag)).size %>)</li>
 					<% end %></ul>
 				</p>
 				<p>
 					Tasks:
 					<ul><% @master_tasks.each do |t| %>
-						<li><%= link_to t.tag, search_tag_path(:tag => t.tag) %> (<%= Entry.tagged_with(t.tag).size %>)</li>
+						<li><%= link_to t.tag, search_tag_path(:tag => t.tag) %> (<%= (@approved_entries & Entry.tagged_with(t.tag)).size %>)</li>
 					<% end %></ul>
 				</p>
 				<p>
 					Systems:
 					<ul><% @master_systems.each do |s| %>
-						<li><%= link_to s.tag, search_tag_path(:tag => s.tag) %> (<%= Entry.tagged_with(s.tag).size %>)</li>
+						<li><%= link_to s.tag, search_tag_path(:tag => s.tag) %> (<%= (@approved_entries & Entry.tagged_with(s.tag)).size %>)</li>
 					<% end %></ul>
 				</p>
 			</p>
 		</div>
-
+		
 		<div id="content">
-			<div id="cloud">
-				<p>
-				<% tag_cloud(@master_tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
-						<%= link_to tag.name, search_tag_path(:tag => tag.name), { :class => css_class } %> 
-					
-				<% end %>
-				</p>
+			<div>
+				<p><%= yield %></p>
 			</div>
-			
-			<p><%= yield %></p>
 		</div>
 	</div>
 	
 	<div id="footer">
-		Copyright
+		<i>Copyright 2010 VR Knowledgebase</i>
 	</div>
+	
 </div>
 
 </body>

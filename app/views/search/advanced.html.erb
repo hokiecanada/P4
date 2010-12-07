@@ -1,3 +1,10 @@
+<div class="welcomemessage">
+	<p>
+		<% tag_cloud(@master_tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
+			<%= link_to tag.name, search_tag_path(:tag => tag.name), { :class => css_class } %> 		
+		<% end %>
+	</p>
+</div>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -88,7 +95,7 @@
 <p>
 	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
 	<% entry.tag_list_on(:authors).each_with_index do |tag,i| %>
-		<%= link_to tag, entries_path(:filter => tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
+		<%= link_to tag, search_tag_path(tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
 	<% end %><br>
 	
 	<%= entry.exp_type %><br>

@@ -35,7 +35,7 @@
 
 <p>
 <h2>Manage users:</h2>
-<table border="1" cellpadding="5">
+<table border="1" cellpadding="10">
 <tr>
 	<th>Email</th>
 	<th>Last access</th>
@@ -46,7 +46,7 @@
 </tr>
 <% @users.each do |user| %>
 <tr>
-	<td><%= user.email %></td>
+	<td><%= link_to user.email, email_form_path(:recipient => user.email) %></td>
 	<td><%= user.last_sign_in_at %></td>
 	<td><%= user.entries.size() %></td>
 	<td><%= user.comments.size() %></td>
@@ -57,3 +57,4 @@
 <%= will_paginate @users, :param_name => 'users_page' %>
 </table>
 </p>
+

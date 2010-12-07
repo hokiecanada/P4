@@ -7,4 +7,5 @@ class AdminFormController < ApplicationController
       format.xml  { render :xml }
     end
   end
+  
 end
