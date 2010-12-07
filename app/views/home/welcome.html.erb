@@ -18,16 +18,16 @@ Many experiments have been performed evaluating the many and varied aspects of i
 				<%= link_to entry.title, entry_path(entry) %><br>
 				<i><%= entry.exp_type %>.</i> By 
 				<% entry.tag_list_on(:authors).each_with_index do |tag,i| %>
-					<%= link_to tag, search_tag_path(tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
+					<%= link_to tag, search_tag_path(:tag => tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
 				<% end %><br>
 				<i>	<% entry.tag_list_on(:tasks).each do |tag| %>
-					<%= link_to tag, search_tag_path(tag) %>, 
+					<%= link_to tag, search_tag_path(:tag => tag) %>, 
 				<% end %>
 				<% entry.tag_list_on(:systems).each do |tag| %>
-					<%= link_to tag, search_tag_path(tag) %>, 
+					<%= link_to tag, search_tag_path(:tag => tag) %>, 
 				<% end %>
 				<% entry.tag_list_on(:comps).each_with_index do |tag,i| %>
-					<%= link_to tag, search_tag_path(tag) %><% if i < entry.tag_list_on(:comps).size - 1 %>, <% end %>
+					<%= link_to tag, search_tag_path(:tag => tag) %><% if i < entry.tag_list_on(:comps).size - 1 %>, <% end %>
 				<% end %></i><br>
 			</div>
 		</div>
