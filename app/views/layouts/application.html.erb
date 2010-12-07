@@ -58,19 +58,19 @@
 				<h3>Browse by category:</h3>
 				<p>
 					Components of Immersion:
-					<ul><% Component.find(:all).each do |c| %>
+					<ul><% @master_components.each do |c| %>
 						<li><%= link_to c.tag, entries_path(:filter => c.tag) %> (<%= Entry.tagged_with(c.tag).size %>)</li>
 					<% end %></ul>
 				</p>
 				<p>
 					Tasks:
-					<ul><% Task.find(:all).each do |t| %>
+					<ul><% @master_tasks.each do |t| %>
 						<li><%= link_to t.tag, entries_path(:filter => t.tag) %> (<%= Entry.tagged_with(t.tag).size %>)</li>
 					<% end %></ul>
 				</p>
 				<p>
 					Systems:
-					<ul><% System.find(:all).each do |s| %>
+					<ul><% @master_systems.each do |s| %>
 						<li><%= link_to s.tag, entries_path(:filter => s.tag) %> (<%= Entry.tagged_with(s.tag).size %>)</li>
 					<% end %></ul>
 				</p>
@@ -80,7 +80,7 @@
 		<div id="content">
 			<div id="cloud">
 				<p>
-				<% tag_cloud(@tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
+				<% tag_cloud(@master_tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
 					<%= link_to tag.name, search_tag_path(:tag => tag.name), { :class => css_class } %> 
 				<% end %>
 				</p>
