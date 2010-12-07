@@ -10,9 +10,10 @@ class HomeController < ApplicationController
   end
   
   def user
-	@entries = Entry.find_all_by_user_id(current_user)
-	@favorites = Favorite.find_all_by_user_id(current_user)
-	@comments = Comment.find_all_by_user_id(current_user)
+	authenticate_user!
+	@entries = Entry.find_all_by_user_id(current_user, :order => "created_at DESC")
+	@favorites = Favorite.find_all_by_user_id(current_user, :order => "created_at DESC")
+	@comments = Comment.find_all_by_user_id(current_user, :order => "created_at DESC")
 
 	@entries = @entries.paginate		:page =>params[:entries_page], :per_page => 5
 	@comments = @comments.paginate		:page =>params[:comments_page], :per_page => 5
@@ -24,14 +25,33 @@ class HomeController < ApplicationController
   end
   
   def admin
-  @entries = Entry.find(:all, :order => "updated_at DESC")
-  @users = User.find(:all, :order => "email")
-  @entries = @entries.paginate	:page =>params[:entries_page], :per_page => 5
-  @users = @users.paginate		:page =>params[:users_page], :per_page => 5
-  
+	authenticate_admin!
+	@entries = Entry.find(:all, :order => "updated_at DESC")
+	@users = User.find(:all, :order => "email")
+	@entries = @entries.paginate	:page =>params[:entries_page], :per_page => 5
+	@users = @users.paginate		:page =>params[:users_page], :per_page => 5
+	  
 	respond_to do |format|
 		format.html # admin.html.erb
 	end
   end
 
+  def email_form
+	authenticate_admin!
+	@recipient = params[:recipient]
+	@subject = "hi"
+	@body = "hi"
+	
+	respond_to do |format|
+		format.html # email_form.html.erb
+		format.xml { render :xml }
+	end
+  end
+  
+  def email_send
+	authenticate_admin!
+	Emailer.send_email_to_user(params[:recipient], params[:subject], params[:body]).deliver
+	
+	redirect_to admin_root_path, :notice => 'Message was sent to the user.'
+  end
 end

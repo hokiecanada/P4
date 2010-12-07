@@ -42,7 +42,8 @@ P4::Application.routes.draw do
   match "admin_comments" 			=> "admin_entries#comments"
   match "admin_edit_form" 			=> "admin_form#edit"
   match "admin_update_status" 		=> "admin_entries#update_status"
-  
+  match "email_form"				=> "home#email_form"
+  match "email_send"				=> "home#email_send"
   
   namespace :user do
 	root :to => "home#user",  :controller => "home"
