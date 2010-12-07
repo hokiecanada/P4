@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<ul title="My contributions" id="cont" >
+	<% @entries.each_with_index do |entry,i| %>
+		<li id="entry<%= i %>">
+			<%= link_to entry.title, entry_path(entry), :tartet => "_self" %>
+		</li>
+	<% end %>
+	<%= will_paginate @entries, :param_name => 'entries_page' %>
+</ul>
+
+
+<ul id="comm" title="My Comments">
+	<% @comments.each_with_index do |comment,i| %>
+		<li id="comment<%= i %>">
+			<% entry = Entry.find(comment.entry_id) %>
+			<%= link_to entry.title, entry_path(entry), :tartet => "_self" %><br>
+			Comment: <i><%= comment.comment %><br>
+			<%= comment.created_at %></i>
+		</li>
+	<% end %>
+	<%= will_paginate @comments, :param_name => 'comments_page'  %>
+</ul>
+
+<ul id="favs" title="My Favorites">
+	<% @favorites.each do |fav| %>
+		<li>
+			<% entry = Entry.find(fav.entry_id) %>
+			<%= link_to entry.title, entry_path(entry), :tartet => "_self" %>
+		</li>
+	<% end %>
+	<%= will_paginate @favorites, :param_name => 'favorites_page'  %>
+</ul>
