@@ -39,8 +39,9 @@ class HomeController < ApplicationController
   def email_form
 	authenticate_admin!
 	@recipient = params[:recipient]
-	@subject = "hi"
-	@body = "hi"
+	@sender = params[:sender]
+	@subject = ""
+	@body = ""
 	
 	respond_to do |format|
 		format.html # email_form.html.erb
@@ -50,7 +51,11 @@ class HomeController < ApplicationController
   
   def email_send
 	authenticate_admin!
-	Emailer.send_email_to_user(params[:recipient], params[:subject], params[:body]).deliver
+	@recipient = params[:recipient]
+	@subject = params[:subject]
+	@body_text = params[:body_text]
+	
+	Emailer.send_email_to_user(params[:recipient], params[:subject], params[:body_text]).deliver
 	
 	redirect_to admin_root_path, :notice => 'Message was sent to the user.'
   end

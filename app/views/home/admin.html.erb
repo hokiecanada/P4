@@ -46,7 +46,7 @@
 </tr>
 <% @users.each do |user| %>
 <tr>
-	<td><%= link_to user.email, email_form_path(:recipient => user.email) %></td>
+	<td><%= link_to user.email, email_form_path(:recipient => user.email, :sender => current_admin.email) %></td>
 	<td><%= user.last_sign_in_at %></td>
 	<td><%= user.entries.size() %></td>
 	<td><%= user.comments.size() %></td>

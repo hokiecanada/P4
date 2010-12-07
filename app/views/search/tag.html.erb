@@ -6,15 +6,35 @@
 	</p>
 </div>
 
+<div id="basic_search">
+<table width="100%">
+	<tr>
+		<td>
+			<%= form_tag search_path(:keyword => @keyword), :method => 'get' do %>
+				<%= text_field_tag :keyword, @keyword, :size => "97" %>
+				<%= submit_tag "Search", :name => nil %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td align="right">
+			<%= link_to "Advanced Search", search_advanced_path(@keyword) %>
+		</td>
+	</tr>
+</table>
+</div>
+
 <p>
-	<h2>Results:</h2>
+	<h2>Search Results:</h2>
+	<%= @found %>
 </p>
-	
+
+<p>
 <% @entries.each do |entry| %>
 <p>
 	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
 	<% entry.tag_list_on(:authors).each_with_index do |tag,i| %>
-		<%= link_to tag, search_tag_path(tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
+		<%= link_to tag, search_tag_path(:tag => tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
 	<% end %><br>
 	
 	<%= entry.exp_type %><br>
@@ -31,6 +51,7 @@
 	<% end %>
 	<br>
 	Times Viewed: <%= entry.viewed %><br>
-<% end %>
 </p>
+<% end %>
 <%= will_paginate @entries %>
+</p>

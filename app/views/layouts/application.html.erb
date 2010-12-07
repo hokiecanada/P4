@@ -59,7 +59,9 @@
 		<div id="aside">
 			<p>
 				<% if admin_signed_in? %>
-					Cannot add new entries as admin.
+					<%= link_to admin_root_path, :class => "new_entry_button" do %>
+						<span>Admin Dashboard</span>
+					<% end %>
 				<% else %>
 					<%= link_to new_entry_path, :class => "new_entry_button", :method => :create do %>
 						<span>Add a new entry</span>

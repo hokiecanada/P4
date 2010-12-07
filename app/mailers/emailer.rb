@@ -93,14 +93,13 @@ class Emailer < ActionMailer::Base
 	end
   end
   
-  def send_email_to_user(recipient, subject, body)
+  def send_email_to_user(recipient, subject, body_text)
 	@recipient = recipient
 	@subject = subject
-	@body = body
+	@body_text = body_text
 	@url = "http://smooth-ice-55.heroku.com/users/sign_in"
 	mail(:to => recipient,
-		 :subject => @subject,
-		 :body => @body) do |format|
+		 :subject => @subject) do |format|
 		 format.html
 	end
   end

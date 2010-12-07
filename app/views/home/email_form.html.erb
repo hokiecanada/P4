@@ -6,26 +6,36 @@
 
 <%= form_tag email_send_path do |f| %>
 
+	<table>
+	<tr>
 	<div class="field">
-		<%= text_field_tag :recipient, @recipient %>
+		<td><%= label_tag "To: " %></td>
+		<td><%= text_field_tag :recipient, @recipient, :size => 75 %></td>
 	</div>
-	
+	</tr>
+	<tr>
 	<div class="field">
-		<%= text_field_tag :sender, @sender %>
+		<td><%= label_tag "From: " %></td>
+		<td><%= text_field_tag :sender, @sender, :size => 75 %></td>
 	</div>
-	
+	</tr>
+	<tr>
 	<div class="field">
-		<%= text_field_tag :subject, @subject %>
+		<td><%= label_tag "Subject: " %></td>
+		<td><%= text_field_tag :subject, @subject, :size => 75 %></td>
 	</div>
-	
+	</tr>
+	<tr>
 	<div class="field">
-		<%= text_field_tag :body, @body %>
+		<td valign="top"><%= label_tag "Message: " %></td>
+		<td><%= text_area_tag :body_text, @body_text, :cols => 57, :rows => 10 %></td>
 	</div>
-	
-	
+	</tr>
+	<tr>
 	<div class="actions">
-		<%= submit_tag "Send Message" %>
+		<td colspan=2 align="right"><%= submit_tag "Send Message" %></td>
 	</div>
+	</tr>
 <% end %> 
 
 
