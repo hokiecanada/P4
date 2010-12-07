@@ -1,7 +1,7 @@
 class EntriesController < ApplicationController
 
-  before_filter :authenticate_user!, :only => [:create, :edit, :update, :destroy]
-  before_filter :authenticate_owner, :only => [:edit, :update, :destroy]
+  before_filter :authenticate_user!, 			:only => [:create, :edit, :update, :destroy]
+  before_filter :authenticate_owner, 			:only => [:edit, :update, :destroy]
   
   def authenticate_owner
 	@user = User.find(current_user)
@@ -12,23 +12,10 @@ class EntriesController < ApplicationController
 	end
   end
 
+  
   def intro
 	respond_to do |format|
       format.html # intro.html.erb
-    end
-  end
-  
-  def search
-	search = Entry.search(:include => [:comments]) do
-		keywords(params[:search])
-	end
-	@entries = search.results
-	
-	@entries = @entries.paginate	:page =>params[:page], :per_page => 10
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @entries }
-	  format.rss { render :rss => @entries }
     end
   end
   
@@ -141,7 +128,7 @@ class EntriesController < ApplicationController
 	@entry.authors_string = authors_string(@entry)
 	
     respond_to do |format|
-      if @entry.save
+      if @entry.update_attributes(params[:entry])
 		Emailer.entry_updated(current_user.email, @entry).deliver
 		Emailer.admin_entry_updated("cstinson@vt.edu", @entry).deliver
         format.html { redirect_to entry_path(@entry), :notice => 'Entry was successfully updated.' }

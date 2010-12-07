@@ -1,7 +1,7 @@
-body { background-color: #fff; color: #333; }
+body { background-color: #fff; }
 
 body, p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: "segoe ui", segoe, tahoma, verdana, sans-serif;
   font-size:   13px;
   line-height: 18px;
 }
@@ -12,9 +12,9 @@ pre {
   font-size: 11px;
 }
 
-a { color: #000; }
-a:visited { color: #666; }
-a:hover { color: #fff; background-color:#000; }
+a { color: #0044cb; text-decoration: underline;}
+a:visited { color: #1155dc; }
+a:hover { text-decoration: none;}
 
 div.field, div.actions {
   margin-bottom: 10px;
@@ -55,84 +55,10 @@ div.field, div.actions {
   list-style: square;
 }
 
-#container
-{
-	margin: 0 0 0 0;
-	width: 100%;
-	background: #fff;
-}
 
-#header
-{
-	clear: both;
-	background: #ccc;
-	padding: 20px;
-}
-
-#top
-{
-	width: 100%;
-}
-
-#sign_in {
-	float: left;
-	display: inline;
-	width: 50%;
-}
-
-#search {
-	float: right;
-	display: inline;
-	width: 40%;
-}
-
-#navigation
-{
-	clear: both;
-	float: left;
-	width: 100%;
-	background: #333;
-}
-
-#content-container
-{
-	clear: both;
-	float: left;
-	width: 100%;
-	background: #FFF;
-}
-
-#aside
-{
-	float: left;
-	width: 30%;
-	margin: 0;
-	display: inline;
-}
-
-#content
-{
-	float: right;
-	width: 70%;
-	padding: 0;
-	margin: 0;
-	display: inline;
-}
-
-
-
-#footer
-{
-	clear: left;
-	background: #ccc;
-	text-align: right;
-	padding: 20px;
-	height: 1%;
-}
 
 #cloud {
-	border: 2px solid #66DDEE;
-	padding: 4px;
+	background-color: #66DDEE;
 }
 .css1 {font-size: 1.0em; color: white; text-decoration: none; padding: 10px; }
 .css2 {font-size: 1.2em; color: magenta; text-decoration: none; padding: 10px; }

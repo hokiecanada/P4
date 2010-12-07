@@ -1,6 +1,9 @@
 class HomeController < ApplicationController
 
   def welcome
+	@recent_entries = Entry.find_all_by_status("Approved", :order => "created_at DESC")
+	
+	@recent_entries = @recent_entries.paginate	:page => params[:page], :per_page => 3
     respond_to do |format|
       format.html # welcome.html.erb
     end

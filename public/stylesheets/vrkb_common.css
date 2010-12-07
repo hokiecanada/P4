@@ -1,0 +1,171 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+h1 {
+	font-size: 150%;
+}
+
+h2 {
+	font-size: 125%;
+}
+
+h3 {
+	font-size: 110%;
+}
+
+ul, li {
+  margin-left: 1em;
+}
+
+.hidden {
+  display: none;
+}
+
+body, p, ol, ul, td {
+  font-family: "segoe ui", segoe, tahoma, verdana, sans-serif;
+  font-size: 14px;
+}
+
+h1, h2, h3, p {
+  margin-bottom: 1em;
+}
+
+#topbar {
+	height: 73px;
+	width: 82%;
+	margin-left: 40px;
+	margin-right: auto;
+	text-align: right;
+	background: #fff url('/images/userbar_bg.png') no-repeat top right;
+}
+
+#sign_in {
+	font-weight: bold;
+}
+
+a.adminsignin {
+  color: #660000;
+}
+
+.logoimage {
+  position: relative;
+}
+
+#vt_logo {
+  top: 10px;
+  right: 0px;
+}
+
+#ucsb_logo {
+  top: 8px;
+  right: 15px;
+}
+
+#header {
+  float: left;
+  position: relative;
+  bottom: 5px;
+}
+
+#sitelogo {
+  width: 287px;
+  height: 55px;
+  background-image: url('/images/site_logo.png');
+  display: block;
+}
+
+#subheader {
+  width: 100%;
+  height: 32px;
+  background: #660000 url('/images/stripe_bg.png') repeat-x;
+} 
+
+#subheader_internal {
+  width: 82%;
+	margin-left: 40px;
+	margin-right: auto;
+	text-align: right;
+}
+
+#quicksearch {
+  padding-top: 4px;
+}
+
+#search {
+  border: 1px solid black;
+  padding: 2px;
+  font-size: 13px;
+  background: #fff url('/images/search_icon.png') center right no-repeat;
+}
+
+#search:focus {
+  border: 1px solid #ff6600;
+}
+
+#contentarea {
+  width: 82%;
+	margin-left: 40px;
+	margin-right: auto;
+	margin-top: 10px;
+	position: relative;
+}
+
+a.new_entry_button {
+  border: 1px solid #668f52;
+  background: #f3f8f8 url('/images/stripes_green.png') repeat;
+  font-weight: bold;
+  padding: 4px 8px;
+  text-decoration: underline;
+  color: #305020;
+  display: inline-block;
+}
+
+.new_entry_button:hover {
+  text-decoration: none;
+}
+
+.new_entry_button span {
+  background: transparent url('/images/plus_green.png') center left no-repeat;
+  height: 21px;
+  padding-left: 25px;
+  display: block;
+}
+
+
+#aside {
+	float: left;
+	width: 25%;
+	margin: 0;
+	display: inline;
+}
+
+#content {
+	float: right;
+	width: 75%;
+	padding: 0;
+	margin: 0;
+	display: inline;
+}
+
+
+#footer {
+	clear: both;
+	text-align: center;
+	padding: 20px 5px;
+  font-size: 12px;
+  color: #666;
+}
+
+.category_browser {
+  margin-top: 5px;
+  color: #c59e9e;
+}
+
+.welcomemessage {
+  padding: 5px;
+  background-color: #ffeeda;
+  font-size: 16px;
+}

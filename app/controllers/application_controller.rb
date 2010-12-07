@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   end
 	
   def get_tags
+	@approved_entries = Entry.find_all_by_status("Approved")
 	@master_components = Component.find(:all)
 	@master_systems = System.find(:all)
 	@master_tasks = Task.find(:all)

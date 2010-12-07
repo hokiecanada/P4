@@ -40,8 +40,8 @@
 <div id="subheader">
 	<div id="subheader_internal">
 		<div id="quicksearch">
-			<%= form_tag search_path, :method => 'get' do %>
-				<%= text_field_tag :keyword, @keyword, :size => 40 %>
+			<%= form_tag entries_path, :method => 'get' do %>
+				<%= text_field_tag :search, @search, :size => 40 %>
 				<%= submit_tag "Search", :name => nil %>
 			<% end %>
 		</div>
@@ -61,44 +61,45 @@
 				<% if admin_signed_in? %>
 					Cannot add new entries as admin.
 				<% else %>
-					<%= link_to new_entry_path, :class => "new_entry_button", :method => :create do %>
+					<%= link_to new_entry_path, :class => "new_entry_button" do %>
 						<span>Add a new entry</span>
 					<% end %>
 				<% end %>
 			</p>
 			<p>
-				<h3>Browse by category:</h3>
+				<h3 class="category_browser">Browse by category:</h3>
 				<p>
 					Components of Immersion:
-					<ul><% @master_components.each do |c| %>
-						<li><%= link_to c.tag, search_tag_path(:tag => c.tag) %> (<%= (@approved_entries & Entry.tagged_with(c.tag)).size %>)</li>
+					<ul><% Component.find(:all).each do |c| %>
+						<li><%= link_to c.tag, entries_path(:filter => c.tag) %> (<%= Entry.tagged_with(c.tag).size %>)</li>
 					<% end %></ul>
 				</p>
 				<p>
 					Tasks:
-					<ul><% @master_tasks.each do |t| %>
-						<li><%= link_to t.tag, search_tag_path(:tag => t.tag) %> (<%= (@approved_entries & Entry.tagged_with(t.tag)).size %>)</li>
+					<ul><% Task.find(:all).each do |t| %>
+						<li><%= link_to t.tag, entries_path(:filter => t.tag) %> (<%= Entry.tagged_with(t.tag).size %>)</li>
 					<% end %></ul>
 				</p>
 				<p>
 					Systems:
-					<ul><% @master_systems.each do |s| %>
-						<li><%= link_to s.tag, search_tag_path(:tag => s.tag) %> (<%= (@approved_entries & Entry.tagged_with(s.tag)).size %>)</li>
+					<ul><% System.find(:all).each do |s| %>
+						<li><%= link_to s.tag, entries_path(:filter => s.tag) %> (<%= Entry.tagged_with(s.tag).size %>)</li>
 					<% end %></ul>
 				</p>
 			</p>
+			
 		</div>
 		
 		<div id="content">
-			<div>
-				<p><%= yield %></p>
+			<p><%= yield %></p>
+			<div id="footer">
+				&copy; Copyright 2010
 			</div>
 		</div>
+		
+		
 	</div>
 	
-	<div id="footer">
-		<i>Copyright 2010 VR Knowledgebase</i>
-	</div>
 	
 </div>
 
