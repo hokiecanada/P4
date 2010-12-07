@@ -2,9 +2,7 @@ class SearchController < ApplicationController
 
   
   def tag
-	if params[:tag]
-		@entries = Entry.tagged_with(params[:tag])
-	end
+	@entries = Entry.tagged_with(params[:tag])
 	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
 	
 	respond_to do |format|
@@ -22,15 +20,13 @@ class SearchController < ApplicationController
 		@entries = nil
 	end
 	
-	if @entries.nil?
-		@found = "No results found."
+	if @entries.size == 1
+		@found = "1 result found"
 	else
 		@found = @entries.size.to_s + " results found."
 	end
-	
-	if !@entries.nil?
-		@entries = @entries.paginate	:page =>params[:page], :per_page => 5
-	end
+
+	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
 	
 	respond_to do |format|
       format.html # basic.html.erb
@@ -108,14 +104,16 @@ class SearchController < ApplicationController
 	
 	if !started
 		@entries = nil
-		@found = "No results found."
+		@found = "0 results found."
 	else
-		@found = @entries.size.to_s + " results found."
+		if @entries.size == 1
+			@found = "1 result found"
+		else
+			@found = @entries.size.to_s + " results found."
+		end
 	end
 	
-	if !@entries.nil?
-		@entries = @entries.paginate	:page =>params[:page], :per_page => 5
-	end
+	@entries = @entries.paginate	:page =>params[:page], :per_page => 5
 	
 	respond_to do |format|
       format.html # advanced.html.erb

@@ -59,19 +59,19 @@
 				<p>
 					Components of Immersion:
 					<ul><% @master_components.each do |c| %>
-						<li><%= link_to c.tag, entries_path(:filter => c.tag) %> (<%= Entry.tagged_with(c.tag).size %>)</li>
+						<li><%= link_to c.tag, search_tag_path(:tag => c.tag) %> (<%= Entry.tagged_with(c.tag).size %>)</li>
 					<% end %></ul>
 				</p>
 				<p>
 					Tasks:
 					<ul><% @master_tasks.each do |t| %>
-						<li><%= link_to t.tag, entries_path(:filter => t.tag) %> (<%= Entry.tagged_with(t.tag).size %>)</li>
+						<li><%= link_to t.tag, search_tag_path(:tag => t.tag) %> (<%= Entry.tagged_with(t.tag).size %>)</li>
 					<% end %></ul>
 				</p>
 				<p>
 					Systems:
 					<ul><% @master_systems.each do |s| %>
-						<li><%= link_to s.tag, entries_path(:filter => s.tag) %> (<%= Entry.tagged_with(s.tag).size %>)</li>
+						<li><%= link_to s.tag, search_tag_path(:tag => s.tag) %> (<%= Entry.tagged_with(s.tag).size %>)</li>
 					<% end %></ul>
 				</p>
 			</p>
