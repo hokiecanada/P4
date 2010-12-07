@@ -15,9 +15,9 @@ class HomeController < ApplicationController
 	@favorites = Favorite.find_all_by_user_id(current_user, :order => "created_at DESC")
 	@comments = Comment.find_all_by_user_id(current_user, :order => "created_at DESC")
 
-	@entries = @entries.paginate		:page =>params[:entries_page], :per_page => 5
-	@comments = @comments.paginate		:page =>params[:comments_page], :per_page => 5
-	@favorites = @favorites.paginate 	:page =>params[:favorites_page], :per_page => 5
+	@entries = @entries.paginate		:page =>params[:entries_page], :per_page => 3
+	@comments = @comments.paginate		:page =>params[:comments_page], :per_page => 3
+	@favorites = @favorites.paginate 	:page =>params[:favorites_page], :per_page => 3
 	
 	respond_to do |format|
 		format.html # user.html.erb

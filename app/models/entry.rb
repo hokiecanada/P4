@@ -55,7 +55,7 @@ class Entry < ActiveRecord::Base
 			:length => { :minimum => 100 }
   validates :specificity, 			:presence => true
   validates :summary, 				:presence => true,
-			:length => { :minimum => 20, :maxiumum => 200 }
+			:length => { :minimum => 20 }
   
   has_many :comments, :dependent => :destroy
 end
