@@ -76,12 +76,13 @@
 				</p>
 			</p>
 		</div>
-		
+
 		<div id="content">
 			<div id="cloud">
 				<p>
 				<% tag_cloud(@master_tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
-					<%= link_to tag.name, search_tag_path(:tag => tag.name), { :class => css_class } %> 
+						<%= link_to tag.name, search_tag_path(:tag => tag.name), { :class => css_class } %> 
+					
 				<% end %>
 				</p>
 			</div>

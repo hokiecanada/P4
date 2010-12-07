@@ -11,11 +11,7 @@ class EntriesController < ApplicationController
 		redirect_to entry_path(@entry), :notice => 'You do not have permission to do that.'
 	end
   end
-  
-  def tag_cloud
-	@tags = Entry.author_counts
-  end
-  
+
   def intro
 	respond_to do |format|
       format.html # intro.html.erb
@@ -38,7 +34,7 @@ class EntriesController < ApplicationController
   
 
   def index
-    #@tags = Entry.author_counts
+
 	@filter = params[:filter]
 	@sort_by = params[:sort_by]
 	

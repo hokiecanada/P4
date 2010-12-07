@@ -10,7 +10,7 @@
 
 <% @entries.each do |entry| %>
 <p>
-	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
+	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year.to_s("%Y") %><br>
 	<% entry.tag_list_on(:authors).each_with_index do |tag,i| %>
 		<%= link_to tag, entries_path(:filter => tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
 	<% end %><br>
