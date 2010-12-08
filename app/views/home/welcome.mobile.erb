@@ -1,3 +1,53 @@
 <p id="notice"><%= notice %></p>
+<!-- Home Menu -->
+		<ul id="Home" title="Home" selected="true">
+			<% if user_signed_in? %><div><h3>Welcome, <%= current_user.email %></h3></div>
+			<% else %>
+				<div><h2>Welcome to the VR Knowledgebase</h2>
+					<p>Use the links below to peruse the repository of immersion research, or sign in for more customization options. </p>
+				</div>
+			<% end %>
+			<li class="group">Navigate the Knowledgebase</li>
+			<li><a href="#About">About</a></li>
+			<li><a href="#Search">Search</a></li>
+			<li><a href="#Browse">Browse Categories</a></li>
+		</ul>	
+		
+		<!-- Search Sub-Menu -->
+		<ul id="Search" title="Search" class="panel">
+			<%= form_tag search_path, :method => 'get' do %>
+				<%= text_field_tag :keyword, @keyword, :size => 40 %>
+				<%= submit_tag "Search", :name => nil %>
+			<% end %>
+		</ul> 
+		
+		<!-- Browse Sub-Menu -->
+		<ul id="Browse" title="Browse">		
+			<li><a href="#comp">Components of Immersion</a></li>
+			<li><a href="#task">Tasks</a></li>
+			<li><a href="#sys">Systems</a></li>
+					
+		</ul>
+		
+		<!-- Browse by Components of Immersion -->
+		<ul id="comp" title="Components of Immersion">
+			<% @master_components.each do |c| %>
+				<li><%= link_to c.tag, search_tag_path(:tag => c.tag) %> (<%= Entry.tagged_with(c.tag).size %>)</li>
+			<% end %>
+		</ul>
+		
+		<!-- Browse by Task -->	
+		<ul id="task" title="Tasks">
+			<% @master_tasks.each do |t| %>
+				<li><%= link_to t.tag, search_tag_path(:tag => t.tag) %> (<%= Entry.tagged_with(t.tag).size %>)</li>
+			<% end %>
+		</ul>
+		
+		<!-- Browse by System-->	
+		<ul id="sys" title="Systems">
+			<% @master_systems.each do |s| %>
+				<li><%= link_to s.tag, search_tag_path(:tag => s.tag) %> (<%= Entry.tagged_with(s.tag).size %>)</li>
+			<% end %>
+		</ul>
 
 

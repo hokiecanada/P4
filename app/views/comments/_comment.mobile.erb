@@ -1,0 +1,12 @@
+
+<p>
+	<%= comment.comment %><br>
+	<% if User.find(comment.user_id) == current_user %>
+		<small><i>Added by: YOU!, <%= comment.created_at %></i><br>
+		<%= link_to 'Delete Comment', [comment.entry, comment], 
+			:confirm => 'Are you sure?',
+			:method => :delete %></small>
+	<% else %>
+		<small><i>Added by: <%= User.find(comment.user_id).email %>, <%= comment.created_at %></i></small>
+	<% end %>
+</p> 

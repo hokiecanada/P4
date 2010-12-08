@@ -1,0 +1,120 @@
+<div class="panel" title="Advanced Search" selected="true">
+
+<div class="welcomemessage">
+	<p>
+		<% tag_cloud(@master_tags, %w(css1 css2 css3 css4 css5 css6)) do |tag, css_class| %>
+			<%= link_to tag.name, search_tag_path(:tag => tag.name), { :class => css_class } %> 		
+		<% end %>
+	</p>
+</div>
+<p id="notice"><%= notice %></p>
+
+<p>
+	<%= form_tag search_advanced_path, :method => 'get' do |f| %>
+		<table align="left" width="100%">
+		<tr>
+			<td><b>Keywords:</b></td>
+			<td><%= text_field_tag :keyword, @keyword, :size => 50 %></td>
+		</tr>
+		<tr>
+			<td><b>Authors:</b></td>
+			<td><%= text_field_tag :author, @author, :size => 50 %></td>
+		</tr>
+		<tr>
+			<td><b>Filters:</b></td>
+			<td>
+			<table>
+				<tr>
+					<td><%= label_tag "Year:" %></td>
+					<td><%= label_tag "Experiment type:" %></td>
+					<td><%= label_tag "Specificity:" %></td>
+				</tr>
+				<tr>
+					<td><%= date_select "range", "year", {:start_year => Time.now.year, :end_year => Time.now.year-50, :discard_day => true, :discard_month => true, :include_blank => true} , {:default => @year_start} %></td>
+					<td><%= select_tag :exp_type, options_for_select(["n/a", "Controlled experiment", "Practical comparison"], @exp_type) %></td>
+					<td><%= select_tag :specificity, options_for_select(["n/a", "Highly general", "Somewhat general", "Neither general nor specific", "Somewhat specific", "Highly specific"], @specificity) %></td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td><b>Environment:</b></td>
+			<td>
+			<table>
+				<tr>
+					<td><%= label_tag "Dimensionality:" %></td>
+					<td><%= label_tag "Scale:" %></td>
+					<td><%= label_tag "Density:" %></td>
+					<td><%= label_tag "Realism:" %></td>
+				</tr>
+				<tr>
+					<td><%= select_tag :env_dim, options_for_select(["n/a", "2.5D", "3D"], @env_dim) %></td>
+					<td><%= select_tag :env_scale, options_for_select(["n/a", "Small scale", "Medium scale", "Large scale"], @env_scale) %></td>
+					<td><%= select_tag :env_density, options_for_select(["n/a", "Low density", "Medium density", "High density"], @env_density) %></td>
+					<td><%= select_tag :env_realism, options_for_select(["n/a", "Low realism", "Medium realism", "High realism"], @env_realism) %></td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td><b>Participants:</b></td>
+			<td>
+			<table>
+				<tr>
+					<td><%= label_tag "Number:" %></td>
+					<td><%= label_tag "Gender:" %></td>
+				</tr>
+				<tr>
+					<td><%= select_tag :part_num, options_for_select(["n/a", "1-5", "6-10", "11-20", "21-50", "50+", "None"], @part_num) %></td>
+					<td><%= select_tag :part_gender, options_for_select(["n/a", "Female only", "Mostly female", "Balanced gender", "Mostly Male", "Male only"], @part_gender) %></td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+		<tr><td></td>
+			<td align="right">
+				<%= submit_tag "Advanced Search", :name => nil %>
+			</td>
+		</tr>
+		<tr><td></td>
+			<td align="right">
+				<%= link_to "Clear Form", search_advanced_path %> | 
+				<%= link_to "Basic Search", search_path(@keyword) %>
+			</td>
+		</tr>
+		</table>
+	<% end %>
+</p>
+
+
+<p>
+	<h2>Search Results:</h2>
+	<%= @found %>
+</p>
+<% if !@entries.nil? %>
+<% @entries.each do |entry| %>
+<p>
+	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
+	<% entry.tag_list_on(:authors).each_with_index do |tag,i| %>
+		<%= link_to tag, search_tag_path(tag) %><% if i < entry.tag_list_on(:authors).size - 1 %>, <% end %>
+	<% end %><br>
+	
+	<%= entry.exp_type %><br>
+	
+	Tags: 
+	<% entry.tag_list_on(:tasks).each do |tag| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %>, 
+	<% end %>
+	<% entry.tag_list_on(:systems).each do |tag| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %>, 
+	<% end %>
+	<% entry.tag_list_on(:comps).each_with_index do |tag,i| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %><% if i < entry.tag_list_on(:comps).size - 1 %>, <% end %>
+	<% end %>
+	<br>
+	Times Viewed: <%= entry.viewed %><br>
+<% end %>
+</p>
+<%= will_paginate @entries %>
+<% end %>
+</div>

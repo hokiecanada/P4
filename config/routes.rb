@@ -53,6 +53,6 @@ P4::Application.routes.draw do
 	root :to => "home#admin", :controller => "home"
   end
   
-  root :to => "home#welcome"
+  root :to => "home#welcome", :controller => "home"
 
 end

@@ -1,0 +1,88 @@
+<p id="notice"><%= notice %></p>
+<div id="entry" title="Paper" selected="true" class="panel">
+
+<% if User.find(@entry.user_id) == current_user %>
+<% elsif user_signed_in? %>
+	<% form_for [@entry, current_user.favorites.build] do |f| %>
+		<%= f.hidden_field :user_id, :value => current_user.id %>
+		<%= f.hidden_field :entry_id, :value => @entry.id %>
+		<%= f.submit 'Add to Favorites' %>
+	<% end %>
+<% else %>
+	<%= button_to 'Add to Favorites', entry_favorites_path(@entry), :method => :create %>
+<% end %>
+
+
+<p>
+
+  <b>Paper title: </b><%= @entry.title %><br>
+			
+
+  <b>Authors: </b>
+	<% @entry.tag_list_on(:authors).each_with_index do |tag,i| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %><% if i < @entry.tag_list_on(:authors).size - 1 %>, <% end %>
+	<% end %><br>
+  <b>Citation: </b><%= @entry.citation %><br> 
+  <b>URL: </b><%= link_to @entry.paper_url %><br>
+
+    <b>Tags: </b>
+	<% @entry.tag_list_on(:tasks).each do |tag| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %>, 
+	<% end %>
+	<% @entry.tag_list_on(:systems).each do |tag| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %>, 
+	<% end %>
+	<% @entry.tag_list_on(:comps).each_with_index do |tag,i| %>
+		<%= link_to tag, search_tag_path(:tag => tag) %><% if i < @entry.tag_list_on(:comps).size - 1 %>, <% end %>
+	<% end %>
+</p>
+
+<p>
+  <b>Task: </b><%= @entry.task_list %><br>
+  <b>Task description: </b><%= @entry.task_desc %><br>
+  <b>Interface description: </b><%= @entry.interface_desc %><br>
+</p>
+
+<p>
+  <b>Environment: </b>
+  <%= @entry.env_dim %>, <%= @entry.env_scale %>, <%= @entry.env_density %>, <%= @entry.env_realism %><br>
+</p>
+
+<p>
+  <b>Participants: </b>
+  <%= @entry.part_num %>, <%= @entry.part_gender %>, <%= @entry.part_age %><br>
+  <b>Technical background: </b><%= @entry.part_background %><br>
+  <b>Other information: </b><%= @entry.part_other %><br>
+</p>
+
+<p>	
+  <b>Experiment details:</b><br>
+  <% if @entry.exp_type == "Controlled experiment" %>
+	<b>Experiment type: </b>A controlled experiment varying individual components of immersion independently<br>
+    <b>Categories of VR displays used in the experiment: </b><%= @entry.system_list %><br>
+	<b>Technical specifications of the systems used: </b><%= @entry.systems_desc %><br>
+	<b>Components of immersion varied: </b><%= @entry.comp_list %><br>
+	<b>Levels of variation for each component: </b><% @entry.comps_desc %><br>
+	<b>Other independent variables: </b><% @entry.variables_desc %><br>
+	<b>Other factors held constant: </b><% @entry.constants %><br>
+  <% else %>
+	<b>Experiment type: </b>A practical comparison of multiple real-world VR systems<br>
+	<b>Categories of VR displays compared in the experiment: </b><%= @entry.system_list %><br>
+	<b>Technical specifications of the systems used: </b><%= @entry.systems_desc %><br>
+	<b>Components of immersion involved in the experiment: </b><%= @entry.comp_list %><br>
+  <% end %>
+</p>
+
+<p>  
+  <b>Findings: </b><%= @entry.findings %><br>
+  <b>Specificity of the findings: </b><%= @entry.specificity %><br>
+  <b>Issues limiting the generality or validity of these results: </b><%= @entry.issues %><br>
+  <b>Additional information regarding the experiment: </b><br> 
+</p>
+
+<p>	
+<h3>Comments:</h3>
+  <%= render :partial => "comments/comment", :collection => @entry.comments %> 
+  <%= render "comments/form" %>
+</p>
+</div>

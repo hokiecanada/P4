@@ -1,0 +1,34 @@
+<div title="Search" selected="true" class="panel">
+<p>
+	<b>Sort by: </b>
+	<%= link_to 'Title', entries_path(:sort_by => "title ASC", :filter => @filter, :search => @search) %> | 
+	<%= link_to 'Date', entries_path(:sort_by => "year DESC", :filter => @filter, :search => @search) %> | 
+	<%= link_to 'Times Viewed', entries_path(:sort_by => "viewed DESC", :filter => @filter, :search => @search) %>
+</p>
+
+<% @entries.each do |entry| %>
+<p>
+	<big><b><%= link_to entry.title, entry %></b></big> - <%= entry.year %><br>
+	<%= entry.authors %><br>
+	
+	<%= entry.exp_type %><br>
+	
+	Tags: 
+	<% entry.tag_list_on(:tasks).each do |tag| %>
+		<%= link_to tag, entries_path(:filter => tag) %>, 
+	<% end %>
+	<% entry.tag_list_on(:systems).each do |tag| %>
+		<%= link_to tag, entries_path(:filter => tag) %>, 
+	<% end %>
+	<% entry.tag_list_on(:comps).each_with_index do |tag,i| %>
+		<%= link_to tag, entries_path(:filter => tag) %><% if i < entry.tag_list_on(:comps).size - 1 %>, <% end %>
+	<% end %>
+	<br>
+	Times Viewed: <%= entry.viewed %><br>
+		<%= link_to 'Edit', edit_entry_path(entry) %>
+		<%= link_to 'Destroy', entry, :confirm => 'Are you sure?', :method => :delete %><br>
+
+</p>
+<%= will_paginate @entries %>
+<% end %>
+</div>
