@@ -29,8 +29,8 @@ P4::Application.configure do
   :port            => 587,
   :tls             => true,
   :authentication  => :login,
-  :user_name       => 'hokiecanada',
-  :password        => 'number17'
+  :user_name       => '',
+  :password        => ''
 }
   
 end
